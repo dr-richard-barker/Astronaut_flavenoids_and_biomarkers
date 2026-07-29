@@ -131,6 +131,7 @@
 %% General Packages Used
 %
 \RequirePackage{manyfoot}% [patch] define \SetFootnoteHook/\DeclareNewFootnote used below
+\RequirePackage{xcolor}% [patch] \definecolor is used in AtBeginDocument
 \AtBeginDocument{%
 %%\newcommand*\ExtraParaSkip{12pt}%
 \SetFootnoteHook{\hspace*{-8pt}}%
