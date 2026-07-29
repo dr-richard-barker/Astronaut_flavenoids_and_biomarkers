@@ -1,0 +1,26 @@
+name: Build manuscript PDF
+on:
+  push:
+    branches: [main]
+    paths: ['astronaut-opposite-forcing/manuscript/latex/**']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: build-manuscript, cancel-in-progress: true }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: xu-cheng/latex-action@v3
+        with:
+          working_directory: astronaut-opposite-forcing/manuscript/latex
+          root_file: main.tex
+          latexmk_use_xelatex: false
+      - run: |
+          mkdir -p docs
+          cp "astronaut-opposite-forcing/manuscript/latex/main.pdf" "docs/${GITHUB_REPOSITORY##*/}.pdf"
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "CI: rebuild compiled manuscript PDF [skip ci]"
+          file_pattern: "docs/*.pdf"
