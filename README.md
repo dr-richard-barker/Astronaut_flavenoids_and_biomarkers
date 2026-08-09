@@ -2,7 +2,7 @@
 
 **A from-scratch R pipeline for "opposite-forcing" drug discovery against spaceflight oncogenic biomarker signatures, plus the supporting JAXA6 human-cell RNA-seq analysis.**
 
-🌐 **Live site:** https://dr-richard-barker.github.io/Astronaut_health_search/
+🌐 **Live site:** [https://dr-richard-barker.github.io/Astronaut_flavenoids_and_biomarkers/](https://dr-richard-barker.github.io/Astronaut_flavenoids_and_biomarkers/)
 
 > Independent research. Not affiliated with or endorsed by NASA or JAXA.
 
