@@ -19,7 +19,7 @@ window.BARKER_SITES = {
   scopes: {
     astrobotany: { label: "AstroBotany", sections: [
       { name:"Analyses", blurb:"Spaceflight & radiation transcriptomics / multi-omics studies.",
-        ids:["Plant_response_to_radiation","arabidopsis-spaceflight-omics","APEX05_results_and_code",
+        ids:["Plant_response_to_radiation","Airflow_omics","arabidopsis-spaceflight-omics","APEX05_results_and_code",
              "B_rappa_LLGCSS","osdr-plant-microbiome","Circadian_decoder"] },
       { name:"Crops", blurb:"Crop plants grown and studied in spaceflight conditions.",
         ids:["veg05-integrated-omics","TICTOC"] },
@@ -31,13 +31,19 @@ window.BARKER_SITES = {
     ]},
     deepspaceag: { label: "Deep Space Agriculture", sections: [
       { name:"Plant systems & crops", blurb:"Growth-chamber gas transport, radiation, germination and crop physiology off Earth.",
-        ids:["LunarLeaf-CFD","Aero-leaf-CFD-analysis-adapted-from-blender-ish","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05","germinator-ai","Seed_sowing_simulator"] },
+        ids:["LunarLeaf-CFD","Airflow_omics","Aero-leaf-CFD-analysis-adapted-from-blender-ish","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05","germinator-ai","Seed_sowing_simulator"] },
       { name:"Stress & biomarker decoders", blurb:"Machine-learning decoders of spaceflight and radiation stress signatures.",
         ids:["deepspace-seed-stress-decoder","astronaut-oncogene-biomarkers","Circadian_decoder"] },
       { name:"Astronaut health", blurb:"Searchable evidence and trend analytics for crew health.",
         ids:["Astronaut_flavenoids_and_biomarkers","Astronaut_trends","Astronaut_brain_food"] },
       { name:"Data & education", blurb:"Open OSDR data notebooks and training resources.",
         ids:["OSDR_jupyter_book.io"] }
+    ]},
+    astronauthealth: { label: "Astronaut Health", sections: [
+      { name: "Physiology & Countermeasures", blurb: "Astronaut muscle atrophy, oncogene biomarkers, and nutritional countermeasures.",
+        ids: ["Muscle-Atrophy-Multi-Omics-OSDR", "Astronaut_flavenoids_and_biomarkers", "Astronaut_brain_food", "astronaut-oncogene-biomarkers"] },
+      { name: "Analytics & Dashboards", blurb: "Interactive dashboards and evidence analytics for crew health.",
+        ids: ["Astronaut_trends"] }
     ]}
   },
   groups: [
@@ -65,6 +71,9 @@ window.BARKER_SITES = {
         { id:"Astronaut_brain_food", emoji:"🥗", title:"Astronaut Opposite Forcing",
           desc:"Consensus spaceflight transcriptomic signatures reversed via LINCS L1000, translated into vegan nutritional countermeasures",
           url:"https://dr-richard-barker.github.io/Astronaut_brain_food/" },
+        { id:"Muscle-Atrophy-Multi-Omics-OSDR", emoji:"💪", title:"Muscle Atrophy Countermeasures",
+          desc:"Cross-species meta-analysis of spaceflight muscle atrophy transcriptomics & translation to plant-based countermeasures",
+          url:"https://dr-richard-barker.github.io/Muscle-Atrophy-Multi-Omics-OSDR/" },
       ]
     },
     {
@@ -91,6 +100,9 @@ window.BARKER_SITES = {
         { id:"smallRNAseq-DREAM", emoji:"🧫", title:"MicroRNA Analysis Pipeline",
           desc:"Cross-species small-RNA-seq (miRNA) pipeline & OSDR mining test",
           url:"https://dr-richard-barker.github.io/smallRNAseq-DREAM/" },
+        { id:"Airflow_omics", emoji:"🌬️", title:"Airflow Omics Model",
+          desc:"CFD-guided multi-omics meta-analysis of Arabidopsis spaceflight adaptation & gas exchange",
+          url:"https://dr-richard-barker.github.io/Airflow_omics/" },
       ]
     },
     {
