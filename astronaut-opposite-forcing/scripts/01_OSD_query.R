@@ -3,7 +3,7 @@
 #' Pulls processed count matrices + DGE tables (no FASTQ/BAM) for:
 #'   - Human panel (11 studies, reused from the discovery repo's curated panel)
 #'   - Rodent panel (13 Mus musculus studies: spaceflight + hindlimb suspension + radiation)
-#'   - JAXA6 astronaut whole-blood signature (from GitHub: Astronaut_health_search)
+#'   - JAXA6 astronaut whole-blood signature (from GitHub: Astronaut_flavenoids_and_biomarkers)
 #'
 #' Idempotent / resume-safe: skips already-downloaded files.
 #'
@@ -48,7 +48,7 @@ RODENT_PANEL <- list(
   `OSD-322` = list(tissue="multiple",         system="radiation_model",   factor="ionizing_radiation",   species="mouse", note="Time-dependent radiation effects, multiple tissues")
 )
 
-GITHUB_REPO <- "https://github.com/dr-richard-barker/Astronaut_health_search.git"
+GITHUB_REPO <- "https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers.git"
 
 main <- function(args = commandArgs(trailingOnly = TRUE)) {
   dry <- "--list" %in% args
@@ -63,7 +63,7 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
   session <- NULL  # use default httr requests (osdr_client handles user-agent)
 
   # ---- JAXA6 from GitHub ----
-  jaxa_dest <- file.path(ext_dir, "Astronaut_health_search")
+  jaxa_dest <- file.path(ext_dir, "Astronaut_flavenoids_and_biomarkers")
   if (!skip_github) {
     if (!dir.exists(file.path(jaxa_dest, ".git"))) {
       cat(sprintf("[github] cloning %s\n", GITHUB_REPO))

@@ -79,7 +79,7 @@ The gene-level analysis also revealed that signature-level and gene-level revers
 
 ## Methods
 
-### Data acquisition. We queried the NASA OSDR API for human and rodent RNA-seq studies with processed count matrices and a testable spaceflight/microgravity/radiation contrast, yielding 24 studies (11 human, 13 rodent; **Table 1**). JAXA6 astronaut whole-blood data were obtained from the Astronaut_health_search GitHub repository. Raw STAR unnormalised count matrices were downloaded per study.
+### Data acquisition. We queried the NASA OSDR API for human and rodent RNA-seq studies with processed count matrices and a testable spaceflight/microgravity/radiation contrast, yielding 24 studies (11 human, 13 rodent; **Table 1**). JAXA6 astronaut whole-blood data were obtained from the Astronaut_flavenoids_and_biomarkers GitHub repository. Raw STAR unnormalised count matrices were downloaded per study.
 
 ### Differential expression. Per-study DESeq2 analysis was run with the contrast spaceflight/microgravity/radiation (treated) vs ground/vivarium/sham control. Genes with padj < 0.05 and |log2FC| > 1 were called significant. Rodent gene identifiers were mapped to human orthologs via biomaRt (getLDS with mirror retry logic; MGI symbol fallback).
 

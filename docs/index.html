@@ -5,14 +5,14 @@
 <meta name="description" content="Spaceflight oncogenic biomarkers and their transcriptomic reversal by food-derived flavonoids — an opposite-forcing R pipeline over NASA OSDR and LINCS L1000. FAIR data and code.">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-theme.css">
-</head><body data-site-id="Astronaut_health_search">
+</head><body data-site-id="Astronaut_flavenoids_and_biomarkers">
 <header class="site"><nav>
   <span class="brand">🧬 Astronaut Health Search</span>
   <a href="#abstract" style="color:var(--accent)">Abstract</a>
   <a href="#highlights">Highlights</a>
   <a href="#figures">Figures</a>
   <a href="#data">Data &amp; code</a>
-  <a href="https://github.com/dr-richard-barker/Astronaut_health_search">GitHub ↗</a>
+  <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers">GitHub ↗</a>
 </nav></header>
 <main>
 <section class="hero">
@@ -27,10 +27,10 @@
     <span class="badge">LINCS L1000</span><span class="badge">metafor meta-analysis</span>
   </div>
   <div class="btnrow">
-    <a class="btn primary" href="https://github.com/dr-richard-barker/Astronaut_health_search/blob/main/astronaut-opposite-forcing/manuscript/manuscript.md">Read the manuscript →</a>
+    <a class="btn primary" href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/blob/main/astronaut-opposite-forcing/manuscript/manuscript.md">Read the manuscript →</a>
     <a class="btn" href="#figures">Figures</a>
-    <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/scripts">Pipeline code</a>
-    <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_health_search">Code &amp; data (GitHub)</a>
+    <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/scripts">Pipeline code</a>
+    <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers">Code &amp; data (GitHub)</a>
   </div>
   <p class="lede"><b>Headline:</b> a <b>1,610-gene</b> spaceflight oncogenic biomarker
   signature, re-derived across 23 OSDR studies, is most strongly reversed by the
@@ -75,23 +75,23 @@ validation.</p><hr /></div>
 
 <h2 id="figures">Selected figures</h2>
 <div class="gallery">
-  <figure><a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F4_oncogene_intersection.png" alt="Oncogene intersection yielding the 1,610-gene biomarker signature."></a><figcaption>F4 — Intersection of spaceflight-significant genes with the oncogene union → 1,610 biomarker genes.</figcaption></figure>
-  <figure><a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F6_lincs_reversal_ranking.png" alt="LINCS L1000 reversal ranking; flavonoids among the top opposite-forcing compounds."></a><figcaption>F6 — LINCS L1000 reversal ranking; 21 compounds at τ = −100, led by flavonoids.</figcaption></figure>
-  <figure><a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F11_gene_level_reversal.png" alt="Gene-level reversal of oncogenic biomarkers by food-derived flavonoids."></a><figcaption>F11 — Gene-level reversal: 242/1,540 biomarker genes counter-regulated by ≥1 flavonoid.</figcaption></figure>
+  <figure><a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F4_oncogene_intersection.png" alt="Oncogene intersection yielding the 1,610-gene biomarker signature."></a><figcaption>F4 — Intersection of spaceflight-significant genes with the oncogene union → 1,610 biomarker genes.</figcaption></figure>
+  <figure><a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F6_lincs_reversal_ranking.png" alt="LINCS L1000 reversal ranking; flavonoids among the top opposite-forcing compounds."></a><figcaption>F6 — LINCS L1000 reversal ranking; 21 compounds at τ = −100, led by flavonoids.</figcaption></figure>
+  <figure><a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/figures"><img src="assets/figures/F11_gene_level_reversal.png" alt="Gene-level reversal of oncogenic biomarkers by food-derived flavonoids."></a><figcaption>F11 — Gene-level reversal: 242/1,540 biomarker genes counter-regulated by ≥1 flavonoid.</figcaption></figure>
 </div>
 
 <h2 id="data">Data &amp; code</h2>
 <div class="content"><ul>
-  <li><b>Manuscript:</b> <a href="https://github.com/dr-richard-barker/Astronaut_health_search/blob/main/astronaut-opposite-forcing/manuscript/manuscript.md">Markdown</a>
-      · npj-styled LaTeX in <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/manuscript/latex"><code>manuscript/latex/</code></a></li>
-  <li><b>Pipeline (R):</b> <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/scripts"><code>scripts/</code></a>
-      (01 OSD query → 07 gene-level reversal) with reusable modules in <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/R"><code>R/</code></a>
-      and a one-command driver <a href="https://github.com/dr-richard-barker/Astronaut_health_search/blob/main/astronaut-opposite-forcing/run_all.R"><code>run_all.R</code></a></li>
-  <li><b>Result tables:</b> <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/tables"><code>tables/</code></a>
+  <li><b>Manuscript:</b> <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/blob/main/astronaut-opposite-forcing/manuscript/manuscript.md">Markdown</a>
+      · npj-styled LaTeX in <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/manuscript/latex"><code>manuscript/latex/</code></a></li>
+  <li><b>Pipeline (R):</b> <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/scripts"><code>scripts/</code></a>
+      (01 OSD query → 07 gene-level reversal) with reusable modules in <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/R"><code>R/</code></a>
+      and a one-command driver <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/blob/main/astronaut-opposite-forcing/run_all.R"><code>run_all.R</code></a></li>
+  <li><b>Result tables:</b> <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/tables"><code>tables/</code></a>
       (T3 meta-signature, T4 oncogene intersection, T6/T7 reversal scores, T11–T13 enrichment &amp; reversal)</li>
-  <li><b>Figures:</b> <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/astronaut-opposite-forcing/figures"><code>figures/</code></a> (F1–F12)</li>
-  <li><b>Supporting JAXA6 data:</b> <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/data"><code>data/</code></a>
-      and <a href="https://github.com/dr-richard-barker/Astronaut_health_search/tree/main/figures"><code>figures/</code></a> (iDEP human-cell RNA-seq)</li>
+  <li><b>Figures:</b> <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/figures"><code>figures/</code></a> (F1–F12)</li>
+  <li><b>Supporting JAXA6 data:</b> <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/data"><code>data/</code></a>
+      and <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/figures"><code>figures/</code></a> (iDEP human-cell RNA-seq)</li>
 </ul>
 <p class="note">Independent research. Not affiliated with or endorsed by NASA or JAXA.
 Reference data (NASA OSDR, LINCS L1000, JAXA) remain subject to their own terms; cite
@@ -100,7 +100,7 @@ the original accessions.</p></div>
 <footer class="site">
   Astronaut Health Search — spaceflight oncogenic biomarkers &amp; opposite-forcing drug discovery ·
   FAIR data &amp; code ·
-  <a href="https://github.com/dr-richard-barker/Astronaut_health_search">GitHub</a>
+  <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers">GitHub</a>
 </footer>
 <script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/sites.js"></script>
 <script src="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/theme.js"></script>

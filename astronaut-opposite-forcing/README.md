@@ -69,7 +69,7 @@ Rscript run_all.R --from 04
 | Source | Use | Access |
 |---|---|---|
 | NASA OSDR (GeneLab) | Human + rodent spaceflight RNA-seq | Public API |
-| JAXA6 astronaut data | Human in-vivo validation | GitHub: `Astronaut_health_search` |
+| JAXA6 astronaut data | Human in-vivo validation | GitHub: `Astronaut_flavenoids_and_biomarkers` |
 | LINCS L1000 GEO signatures | Drug perturbation z-scores for tau-analog | Datalake |
 | LINCS single-drug GMT | Drug up/down gene sets for fgsea cross-check | Datalake |
 | Broad Drug Repurposing Hub | Drug phase / MoA / target / indication | Datalake (parquet) |
