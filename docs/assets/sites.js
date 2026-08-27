@@ -22,20 +22,22 @@ window.BARKER_SITES = {
         ids:["Plant_response_to_radiation","Airflow_omics","arabidopsis-spaceflight-omics","APEX05_results_and_code",
              "B_rappa_LLGCSS","osdr-plant-microbiome","Circadian_decoder"] },
       { name:"Crops", blurb:"Crop plants grown and studied in spaceflight conditions.",
-        ids:["veg05-integrated-omics","TICTOC"] },
+        ids:["veg05-integrated-omics","TICTOC","fungal-bgc-atlas"] },
       { name:"Tools", blurb:"Interactive decoders, simulators & reusable analysis pipelines.",
         ids:["Tropism_autodecoder_2026","germinator-ai","Seed_sowing_simulator","Physics-simulator-for-statolith-modelling-","smallRNAseq-DREAM",
-             "astroroot","AstroBotany_calibration_image_sharing_and_analysis","Anthocyanin-Image-analysis"] },
+             "astroroot","AstroBotany_calibration_image_sharing_and_analysis","Anthocyanin-Image-analysis","AstroRegolith","AstroMycology","Lunar_Red_Alert"] },
       { name:"Education", blurb:"Courses & classroom-facing astrobotany outreach.",
         ids:["AIRI","madwest-astrobotany"] }
     ]},
     deepspaceag: { label: "Deep Space Agriculture", sections: [
       { name:"Plant systems & crops", blurb:"Growth-chamber gas transport, radiation, germination and crop physiology off Earth.",
-        ids:["LunarLeaf-CFD","Airflow_omics","Aero-leaf-CFD-analysis-adapted-from-blender-ish","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05","germinator-ai","Seed_sowing_simulator"] },
+        ids:["LunarLeaf-CFD","Airflow_omics","Aero-leaf-CFD-analysis-adapted-from-blender-ish","spaceflight-plant-hardware-cfd","Plant_response_to_radiation","B_rappa_LLGCSS","PhysioSpace_stress_decoding_VEG05","germinator-ai","Seed_sowing_simulator","lunar-magnetic-biology","AstroRegolith","AstroMycology","microgreen-chamber-cfd","fungal-bgc-atlas"] },
+      { name:"Planetary environment", blurb:"Magnetic fields, radiation, and environmental conditions on the Moon and Mars.",
+        ids:["mars-magnetic-biology","clpds-planetary-visualization","earth-magnetosphere-4d-viz"] },
       { name:"Stress & biomarker decoders", blurb:"Machine-learning decoders of spaceflight and radiation stress signatures.",
         ids:["deepspace-seed-stress-decoder","astronaut-oncogene-biomarkers","Circadian_decoder"] },
       { name:"Astronaut health", blurb:"Searchable evidence and trend analytics for crew health.",
-        ids:["Astronaut_flavenoids_and_biomarkers","Astronaut_trends","Astronaut_brain_food"] },
+        ids:["Muscle-Atrophy-Multi-Omics-OSDR","Astronaut_flavenoids_and_biomarkers","Astronaut_trends","Astronaut_brain_food"] },
       { name:"Data & education", blurb:"Open OSDR data notebooks and training resources.",
         ids:["OSDR_jupyter_book.io"] }
     ]},
@@ -103,6 +105,12 @@ window.BARKER_SITES = {
         { id:"Airflow_omics", emoji:"🌬️", title:"Airflow Omics Model",
           desc:"CFD-guided multi-omics meta-analysis of Arabidopsis spaceflight adaptation & gas exchange",
           url:"https://dr-richard-barker.github.io/Airflow_omics/" },
+        { id:"spaceflight-plant-hardware-cfd", emoji:"🛸", title:"Spaceflight Plant Hardware CFD",
+          desc:"OpenFOAM 3D CFD of boundary-layer scaling across five spaceflight growth chambers at four gravity regimes",
+          url:"https://dr-richard-barker.github.io/spaceflight-plant-hardware-cfd/" },
+        { id:"mars-magnetic-biology", emoji:"🔴", title:"Mars Magnetic Biology",
+          desc:"Crustal magnetic field heterogeneity & biological implications at candidate Mars landing sites",
+          url:"https://dr-richard-barker.github.io/mars-magnetic-biology/" },
       ]
     },
     {
@@ -158,6 +166,24 @@ window.BARKER_SITES = {
         { id:"madwest-astrobotany", emoji:"🚀", title:"MadWest Astrobotany",
           desc:"MadWest astrobotany outreach & resources",
           url:"https://dr-richard-barker.github.io/madwest-astrobotany/" },
+        { id:"lunar-magnetic-biology", emoji:"🧲", title:"Lunar Magnetic Biology",
+          desc:"Interactive 3D globe visualizing lunar magnetic anomalies and their biological effects",
+          url:"https://dr-richard-barker.github.io/lunar-magnetic-biology/" },
+        { id:"clpds-planetary-visualization", emoji:"🪐", title:"Planetary Exploration Suite (CLPDS)",
+          desc:"Interactive data visualization suite for China's lunar (Chang'e) and Martian (Tianwen) exploration data",
+          url:"https://dr-richard-barker.github.io/clpds-planetary-visualization/" },
+        { id:"AstroRegolith", emoji:"🌱", title:"AstroRegolith Reanalysis",
+          desc:"NASA dataset reanalysis & open web database for plant growth in lunar, Martian, and asteroid regolith",
+          url:"https://dr-richard-barker.github.io/AstroRegolith/", thumb_ext:"gif" },
+        { id:"AstroMycology", emoji:"🍄", title:"AstroMycology Scan Database",
+          desc:"Vite/React image + 3D scan library with an in-browser mesh viewer and volume/surface analysis",
+          url:"https://dr-richard-barker.github.io/AstroMycology/", thumb_ext:"gif" },
+        { id:"microgreen-chamber-cfd", emoji:"🌬️", title:"Microgreen CFD Model",
+          desc:"OpenFOAM 3D computational fluid dynamics (CFD) internal airflow analysis of a growth chamber",
+          url:"https://dr-richard-barker.github.io/microgreen-chamber-cfd/", thumb_ext:"gif" },
+        { id:"earth-magnetosphere-4d-viz", emoji:"🛡️", title:"4D Geospace Explorer",
+          desc:"Dynamic 4D visualization of Earth's magnetosphere, field lines, and magnetosheath currents",
+          url:"https://dr-richard-barker.github.io/earth-magnetosphere-4d-viz/", thumb_ext:"gif" },
       ]
     },
     {
@@ -169,6 +195,9 @@ window.BARKER_SITES = {
         { id:"Lunar-and-Martian-frontier-game-prototype", emoji:"🕹️", title:"Lunar & Martian Frontier",
           desc:"Browser colony-building game prototype set on the Moon and Mars",
           url:"https://dr-richard-barker.github.io/Lunar-and-Martian-frontier-game-prototype/" },
+        { id:"Lunar_Red_Alert", emoji:"🚀", title:"Lunar Red Alert",
+          desc:"Libre Blazor WebAssembly real-time strategy (RTS) space game engine clone",
+          url:"https://dr-richard-barker.github.io/Lunar_Red_Alert/", thumb_ext:"gif" },
       ]
     },
     {
@@ -180,6 +209,9 @@ window.BARKER_SITES = {
         { id:"AIRI", emoji:"🌍", title:"Astrobotany International Research Initiative",
           desc:"AIRI — astrobotany international research initiative",
           url:"https://dr-richard-barker.github.io/AIRI/" },
+        { id:"fungal-bgc-atlas", emoji:"🧬", title:"Fungal BGC Atlas",
+          desc:"Curated, evidence-linked database of 609 fungal biosynthetic gene cluster (BGC) dossiers",
+          url:"https://dr-richard-barker.github.io/fungal-bgc-atlas/", thumb_ext:"gif" },
       ]
     }
   ]
