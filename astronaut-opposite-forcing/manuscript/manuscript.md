@@ -103,7 +103,7 @@ The gene-level analysis also revealed that signature-level and gene-level revers
 
 ## Data and code availability
 
-- Code: https://github.com/dr-richard-barker/astronaut-opposite-forcing
+- Code: https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers
 - Zenodo deposit: TODO (DOI upon publication)
 - OSDR data: https://osdr.nasa.gov/bio/repo/ (public)
 - LINCS L1000 signatures, Broad Drug Repurposing Hub, PrimeKG: accessed via the Biomni datalake

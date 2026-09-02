@@ -43,32 +43,56 @@ that:
 | Biomarker genes directly reversed by ≥1 flavonoid | 242 / 1,540 (15.7%); 20 reversed by all three |
 | Disease enrichment | sarcomatoid carcinoma, coronary artery disease, prostate cancer, hereditary breast/ovarian cancer, fatty liver disease |
 
-Full methods, figures, and the complete results narrative are in
-[`astronaut-opposite-forcing/manuscript/manuscript.md`](astronaut-opposite-forcing/manuscript/manuscript.md),
-with numbered supplementary tables (T3–T13) in
-[`astronaut-opposite-forcing/tables/`](astronaut-opposite-forcing/tables/).
+Full methods, figures, and the complete results narrative are available in:
+- **Manuscript (PDF):** [`docs/Astronaut_flavenoids_and_biomarkers_manuscript.pdf`](docs/Astronaut_flavenoids_and_biomarkers_manuscript.pdf)
+- **Manuscript (Word DOCX):** [`docs/Astronaut_flavenoids_and_biomarkers_manuscript.docx`](docs/Astronaut_flavenoids_and_biomarkers_manuscript.docx)
+- **Manuscript (Markdown):** [`astronaut-opposite-forcing/manuscript/manuscript.md`](astronaut-opposite-forcing/manuscript/manuscript.md)
+- **LaTeX source (npj Microgravity style):** [`astronaut-opposite-forcing/manuscript/latex/`](astronaut-opposite-forcing/manuscript/latex/)
+- **Supplementary tables (T3–T13c):** [`astronaut-opposite-forcing/tables/`](astronaut-opposite-forcing/tables/)
+- **Publication figures (F1–F12):** [`astronaut-opposite-forcing/figures/`](astronaut-opposite-forcing/figures/)
 
 ## Repository structure
 
 ```
 .
 ├── astronaut-opposite-forcing/   # MAIN analysis
-│   ├── manuscript/manuscript.md   # Full manuscript (prepared for npj Microgravity)
-│   └── tables/                    # Supplementary tables T3–T13
+│   ├── manuscript/               # Full manuscript (Markdown, LaTeX, PDF, DOCX)
+│   │   ├── manuscript.md
+│   │   ├── manuscript.pdf
+│   │   ├── manuscript.docx
+│   │   └── latex/                # Springer Nature npj Microgravity template
+│   ├── figures/                  # Publication figures F1–F12 + F4b (PNG & SVG)
+│   ├── scripts/                  # R execution pipeline (01_OSD_query to 07_gene_level_reversal)
+│   ├── R/                        # Reusable R modules
+│   └── tables/                   # Supplementary tables T3–T13c
 │       ├── T3_meta_signature.tsv
 │       ├── T4_oncogene_intersection.csv       # the 1,610 biomarker genes
-│       ├── T6_lincs_reversal_scores.csv
+│       ├── T5_validation_concordance.csv      # Concordance with S2
+│       ├── T6_lincs_reversal_scores.csv       # 420 drug perturbation scores
 │       ├── T7_top_opposite_forcing.csv        # the 21 reversal compounds
+│       ├── T8_tissue_stratified_reversal.csv  # 19 tissue stratification
+│       ├── T9_drug_context.csv                # Broad Hub / PrimeKG annotation
+│       ├── T10b_disease_enrichment_combined.csv
 │       ├── T11_disease_enrichment_opentargets.csv
-│       ├── T12_nutraceutical_flags.csv
-│       ├── T13_gene_level_reversal.csv
-│       └── ... (T5, T8–T10, T12b/c, T13b)
+│       ├── T12_nutraceutical_flags.csv        # Top-50 nutraceutical candidates
+│       ├── T12c_nutraceutical_full_scan.csv   # 37 nutraceutical signatures
+│       ├── T13_gene_level_reversal.csv        # 3,895 gene x signature comparisons
+│       ├── T13b_gene_level_reversal_summary.csv
+│       └── T13c_reversed_genes_union.csv      # 242 unique reversed genes
 ├── data/                          # Supporting JAXA6 human-cell RNA-seq inputs
 │   ├── JAXA6_FL_vs_Pre_diff_expression_all_comparisons.csv
 │   ├── JAXA5_venn_for_metaanalysis.csv
 │   ├── JAXA_Matrix_TGB_050_..._targets_.csv
 │   ├── JAXA6_TGB_050_..._SEM_4iDEP.csv.zip
 │   └── JAXA_RPM_human_cells_RNAseq/
+├── docs/                          # Live GitHub Pages site & deployed manuscript
+│   ├── index.html
+│   ├── Astronaut_flavenoids_and_biomarkers_manuscript.pdf
+│   ├── Astronaut_flavenoids_and_biomarkers_manuscript.docx
+│   └── assets/
+│       ├── style.css
+│       ├── figures/               # High-res publication & JAXA figures
+│       └── ...
 ├── figures/                       # iDEP / KEGG figures (JAXA6 analysis)
 │   ├── iDEP_DRB_JAXA6_V1.svg
 │   ├── KEGG_fl_vs_GC.svg
