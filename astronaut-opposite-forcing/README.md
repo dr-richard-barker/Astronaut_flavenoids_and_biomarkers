@@ -100,12 +100,16 @@ Rscript run_all.R --from 04
 | F11 | Gene-level reversal overview (bar + scatter, 3 flavonoid signatures) |
 | F12 | Top 50 reversed oncogenic biomarker genes heatmap (3 signatures) |
 
-### Tables (`results/tables/`, CSV unless noted)
+### Tables (CSV unless noted)
+
+The scripts write these to `results/tables/`; this repository stores them in `tables/`.
+T2 is stored gzipped (`tables/T2_per_study_DE.csv.gz`, 22 MB; the plain CSV is 51.5 MB).
+Run `gunzip -k` on it before running script 03, which reads the plain CSV.
 
 | Table | Rows | Description |
 |---|---|---|
 | T1 | 24 | Dataset panel (accession, tissue, species, factor, sample counts) |
-| T2 | 410,121 | Per-study DESeq2 results |
+| T2 (CSV.gz) | 410,121 | Per-study DESeq2 results |
 | T3 (TSV) | 40,211 | Genome-wide meta-signature (metafor REML) |
 | T4 | 1,610 | Oncogenic biomarker intersection (meta-significant AND oncogene union) |
 | T4a | 5 | Oncogene source counts (MSigDB C6, KEGG, curated; COSMIC/OncoKB gated) |

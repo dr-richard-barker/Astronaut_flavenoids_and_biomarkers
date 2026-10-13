@@ -1,0 +1,6 @@
+"source","status","n_genes"
+"COSMIC_CGC","FAILED_all_urls",0
+"OncoKB","HTTP_401",0
+"MSigDB_C6","OK",10927
+"KEGG_oncogenesis","OK",931
+"Curated","OK",195
