@@ -33,8 +33,10 @@ latex/
       sub-tables). The machine-readable CSVs are in `../../tables/`; typeset the
       key ones as LaTeX tables and/or bundle the rest as supplementary data per
       journal instructions. (Only figures are inlined here.)
-- [ ] **References** — transcribed with volumes/pages; add DOIs (one entry,
-      Duan 2023, needs volume/article-number — marked `% TODO`).
+- [ ] **References** — checked against CrossRef on 2026-10-14: six verified,
+      `chandak2023` (PrimeKG) and `ochoa2023` corrected, and `beheshti2023` and
+      `duan2023` have no matching record, so they print as TODO. Replace those two and
+      add DOIs to the rest.
 - [ ] **Figures** — repo PNGs; SVG editable versions exist in `../../figures/`.
       npj prefers vector/≥300 dpi for final submission.
 

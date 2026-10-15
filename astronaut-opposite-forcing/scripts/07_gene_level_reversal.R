@@ -40,6 +40,8 @@ lincs_path <- "/mnt/datalake/LINCS1000/RNAseq_transcriptomics_signatures/human_g
 dir.create(fig_dir, recursive = TRUE, showWarnings = FALSE)
 dir.create(tab_dir, recursive = TRUE, showWarnings = FALSE)
 
+source(file.path(repo, "R", "figures_reversal.R"))  # plot_f11()
+
 # Phylo palette
 phylo_blue <- "#0279EE"
 phylo_orange <- "#FF9400"
@@ -201,77 +203,11 @@ print(head(t13c, 10)[, .(gene, spaceflight_dir, mean_lfc, max_abs_z, max_reversa
 # ------------------------------------------------------------------------------
 # 7. F11 -- gene-level reversal overview (bar + scatter)
 # ------------------------------------------------------------------------------
-# Panel A: grouped bar chart of reversal vs concordant counts at 3 thresholds
-bar_dt <- rbindlist(list(
-  t13[, .(compound_label, threshold = "|z|>=1.5", count = sum(reversed_z1.5), type = "reversed")],
-  t13[, .(compound_label, threshold = "|z|>=1.5", count = sum(concordant_z1.5), type = "concordant")],
-  t13[, .(compound_label, threshold = "|z|>=2", count = sum(reversed_z2), type = "reversed")],
-  t13[, .(compound_label, threshold = "|z|>=2", count = sum(!reversed & abs(compound_z) >= 2), type = "concordant")],
-  t13[, .(compound_label, threshold = "|z|>=3", count = sum(reversed_z3), type = "reversed")],
-  t13[, .(compound_label, threshold = "|z|>=3", count = sum(!reversed & abs(compound_z) >= 3), type = "concordant")]
-))
-bar_dt[, threshold := factor(threshold, levels = c("|z|>=1.5", "|z|>=2", "|z|>=3"))]
-bar_dt[, compound_label := factor(compound_label,
-                                  levels = c("apigenin+luteolin_1", "apigenin+luteolin_2", "licochalcone_A"))]
-
-pA <- ggplot(bar_dt, aes(x = threshold, y = count, fill = type)) +
-  geom_col(position = position_dodge(width = 0.7), width = 0.6) +
-  geom_text(aes(label = count), position = position_dodge(width = 0.7),
-            vjust = -0.3, size = 3) +
-  facet_wrap(~ compound_label, ncol = 3) +
-  scale_fill_manual(values = c("reversed" = phylo_blue, "concordant" = phylo_orange),
-                    name = "Direction") +
-  labs(title = "Gene-level reversal of oncogenic biomarkers by flavonoids",
-       subtitle = "Reversed = spaceflight direction opposite to compound z-score",
-       x = "LINCS |z| threshold", y = "Number of T4 genes") +
-  theme_minimal(base_family = "Liberation Sans") +
-  theme(plot.title = element_text(face = "bold"),
-        strip.text = element_text(face = "bold", size = 10),
-        strip.background = element_rect(fill = "grey92", color = NA),
-        panel.grid.minor = element_blank(),
-        legend.position = "bottom")
-
-# Panel B: scatter spaceflight mean_lfc vs compound z (GSE128097_1)
-scatter_dt <- t13[compound_label == "apigenin+luteolin_1"]
-scatter_dt[, status := fcase(
-  reversed_z1.5 == TRUE, "Reversed (|z|>=1.5)",
-  concordant_z1.5 == TRUE, "Concordant (|z|>=1.5)",
-  abs(compound_z) >= 1.5, "Concordant (|z|>=1.5)",
-  reversed == TRUE, "Reversed (weak)",
-  reversed == FALSE, "Concordant (weak)",
-  default = "No effect"
-)]
-# Simplify: reversed strong, concordant strong, weak/no effect
-scatter_dt[, status_simple := fcase(
-  reversed_z1.5 == TRUE, "Reversed (|z|>=1.5)",
-  concordant_z1.5 == TRUE, "Concordant (|z|>=1.5)",
-  default = "Below threshold"
-)]
-
-pB <- ggplot(scatter_dt, aes(x = mean_lfc, y = compound_z, color = status_simple)) +
-  geom_point(alpha = 0.6, size = 1.5) +
-  geom_hline(yintercept = 0, linetype = "solid", color = "grey50", linewidth = 0.3) +
-  geom_vline(xintercept = 0, linetype = "solid", color = "grey50", linewidth = 0.3) +
-  geom_hline(yintercept = c(-1.5, 1.5), linetype = "dashed", color = "grey70", linewidth = 0.3) +
-  scale_color_manual(values = c("Reversed (|z|>=1.5)" = phylo_blue,
-                                "Concordant (|z|>=1.5)" = phylo_orange,
-                                "Below threshold" = phylo_grey),
-                     name = "Status") +
-  annotate("text", x = -4, y = 5, label = "Reversed quadrant\n(SF down, compound up)",
-           hjust = 0, size = 3, color = phylo_blue, fontface = "bold") +
-  annotate("text", x = 3, y = -5, label = "Reversed quadrant\n(SF up, compound down)",
-           hjust = 0, size = 3, color = phylo_blue, fontface = "bold") +
-  labs(title = "Apigenin + Luteolin (GSE128097_1)",
-       subtitle = sprintf("%d reversed, %d concordant at |z|>=1.5",
-                          sum(scatter_dt$reversed_z1.5), sum(scatter_dt$concordant_z1.5)),
-       x = "Spaceflight mean log2FC (T4 oncogenic biomarkers)",
-       y = "LINCS compound z-score") +
-  theme_minimal(base_family = "Liberation Sans") +
-  theme(plot.title = element_text(face = "bold"),
-        panel.grid.minor = element_blank(),
-        legend.position = "bottom")
-
-p11 <- pA / pB + plot_layout(heights = c(1, 1.2))
+# Panel A: reversed vs concordant counts per signature at 3 thresholds.
+# Panel B: scatter of spaceflight mean_lfc vs compound z (GSE128097_1).
+# Defined in R/figures_reversal.R. The counts are grouped by signature; an earlier
+# version summed over all three signatures and drew the pooled totals in every facet.
+p11 <- plot_f11(as.data.frame(t13))
 ggsave(file.path(fig_dir, "F11_gene_level_reversal.svg"), p11,
        width = 12, height = 10, dpi = 150)
 ggsave(file.path(fig_dir, "F11_gene_level_reversal.png"), p11,

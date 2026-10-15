@@ -1,6 +1,6 @@
 # Astronaut Health Search — spaceflight oncogenic biomarkers and their reversal by food-derived flavonoids
 
-**A from-scratch R pipeline for "opposite-forcing" drug discovery against spaceflight oncogenic biomarker signatures, plus the supporting JAXA6 human-cell RNA-seq analysis.**
+**A from-scratch R pipeline for "opposite-forcing" drug discovery against spaceflight oncogenic biomarker signatures, plus separate supporting iDEP analyses of JAXA astronaut plasma cell-free RNA and human-cell RNA-seq data.**
 
 🌐 **Live site:** [https://dr-richard-barker.github.io/Astronaut_flavenoids_and_biomarkers/](https://dr-richard-barker.github.io/Astronaut_flavenoids_and_biomarkers/)
 
@@ -21,8 +21,8 @@ it ("opposite forcing").
 The main analysis (`astronaut-opposite-forcing/`) is a from-scratch R pipeline
 that:
 
-1. Re-discovers a spaceflight oncogenic biomarker signature across **~23 NASA
-   OSDR RNA-seq studies** (11 human, 12 rodent) using strict DE thresholds
+1. Re-discovers a spaceflight oncogenic biomarker signature across **23 NASA
+   OSDR RNA-seq studies** (10 human, 13 rodent) using strict DE thresholds
    (padj < 0.05, |log2FC| > 1) and a random-effects meta-analysis (`metafor` REML).
 2. Screens **420 LINCS L1000 drug perturbation signatures** for transcriptomic
    reversal via a tau-analog connectivity score.
@@ -38,9 +38,9 @@ that:
 | Meta-analysis genes scored | 40,211 (3,668 significant) |
 | Oncogenic biomarker genes (∩ 11,241-gene oncogene union) | **1,610** |
 | Validation vs. independent Python meta-signature (S2) | Spearman ρ = 0.60, 76% sign agreement |
-| Compounds with maximal reversal (tau = −100) | 21 |
+| Signatures with maximal reversal (tau = −100) | 17 (21 with tau < −50) |
 | Lead nutraceutical hits | **apigenin, luteolin, licochalcone A** (food-derived flavonoids) |
-| Biomarker genes directly reversed by ≥1 flavonoid | 242 / 1,540 (15.7%); 20 reversed by all three |
+| Biomarker genes directly reversed by ≥1 flavonoid | 242 / 1,396 assessable (17.3%); 20 reversed by all three |
 | Disease enrichment | sarcomatoid carcinoma, coronary artery disease, prostate cancer, hereditary breast/ovarian cancer, fatty liver disease |
 
 Full methods, figures, and the complete results narrative are available in:
@@ -69,8 +69,8 @@ Full methods, figures, and the complete results narrative are available in:
 │       ├── T4_oncogene_intersection.csv       # the 1,610 biomarker genes
 │       ├── T5_validation_concordance.csv      # Concordance with S2
 │       ├── T6_lincs_reversal_scores.csv       # 420 drug perturbation scores
-│       ├── T7_top_opposite_forcing.csv        # the 21 reversal compounds
-│       ├── T8_tissue_stratified_reversal.csv  # 19 tissue stratification
+│       ├── T7_top_opposite_forcing.csv        # top 50 signatures by tau (21 below −50)
+│       ├── T8_tissue_stratified_reversal.csv  # per-study scores, 11 studies
 │       ├── T9_drug_context.csv                # Broad Hub / PrimeKG annotation
 │       ├── T10b_disease_enrichment_combined.csv
 │       ├── T11_disease_enrichment_opentargets.csv
@@ -79,7 +79,7 @@ Full methods, figures, and the complete results narrative are available in:
 │       ├── T13_gene_level_reversal.csv        # 3,895 gene x signature comparisons
 │       ├── T13b_gene_level_reversal_summary.csv
 │       └── T13c_reversed_genes_union.csv      # 242 unique reversed genes
-├── data/                          # Supporting JAXA6 human-cell RNA-seq inputs
+├── data/                          # JAXA data (not read by the R pipeline)
 │   ├── JAXA6_FL_vs_Pre_diff_expression_all_comparisons.csv
 │   ├── JAXA5_venn_for_metaanalysis.csv
 │   ├── JAXA_Matrix_TGB_050_..._targets_.csv
@@ -98,7 +98,7 @@ Full methods, figures, and the complete results narrative are available in:
 │   ├── KEGG_fl_vs_GC.svg
 │   └── Jaxa6_iDEP_figures_August/
 ├── execution_trace/PLAN.md        # Gene-level flavonoid-reversal analysis plan
-├── LICENSE                        # CC0-1.0
+├── LICENSE                        # MIT
 └── README.md
 ```
 
@@ -107,15 +107,20 @@ Full methods, figures, and the complete results narrative are available in:
 - **NASA Open Science Data Repository (OSDR / GeneLab):** https://osdr.nasa.gov
   (cite the individual OSD accessions listed in the manuscript).
 - **LINCS L1000** drug perturbation signatures (via GEO).
-- **JAXA** human-cell RNA-seq (JAXA5/JAXA6 series) — supporting `data/` and
-  `figures/`.
+- **JAXA** — `data/` holds astronaut plasma cell-free RNA from the JAXA Cell-Free
+  Epigenome study ([OSD-530](https://osdr.nasa.gov/bio/repo/data/studies/OSD-530);
+  six astronauts, 64 samples before, during and after flight; files
+  `JAXA6_*`, `JAXA_Matrix_TGB_050_*`) and human-cell RNA-seq whose columns are
+  labelled 1G and suG (`JAXA_RPM_human_cells_RNAseq/`). The R pipeline does not read
+  them. The iDEP and KEGG figures in `figures/` come from separate iDEP analyses; the
+  source dataset of `KEGG_fl_vs_GC.svg` is not recorded (TODO).
 - Annotation: MSigDB C6, KEGG, Broad Drug Repurposing Hub, PrimeKG, Open Targets.
 
 ## Reproduction
 
 The opposite-forcing pipeline is implemented in R; see the Methods section of
 `astronaut-opposite-forcing/manuscript/manuscript.md` for package versions,
-thresholds, and the connectivity-score formulation. The JAXA6 supporting
+thresholds, and the connectivity-score formulation. The JAXA supporting
 analysis was produced with [iDEP](http://bioinformatics.sdstate.edu/idep/).
 
 ## Code availability
@@ -151,8 +156,8 @@ in the companion repository
 
 ## License
 
-**CC0 1.0 Universal** (public domain dedication) — see `LICENSE`. OSDR/LINCS/JAXA
-source data remain subject to their own terms; cite the original accessions.
+**MIT** — see [`LICENSE`](LICENSE). OSDR/LINCS/JAXA source data remain subject to
+their own terms; cite the original accessions.
 
 ## Citation
 

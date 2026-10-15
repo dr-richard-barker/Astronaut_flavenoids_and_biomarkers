@@ -27,6 +27,7 @@
 
 source("R/lincs_reversal.R")
 source("R/primekg.R")
+source("R/figures_reversal.R")
 
 PADJ <- 0.05
 LFC  <- 1.0
@@ -344,23 +345,12 @@ make_figures <- function(reversal, top_combined, tissue_rev, context, fig_dir) {
     th + ggplot2::theme(legend.position = "right")
   save_fig(p6, file.path(fig_dir, "F6_lincs_reversal_ranking"))
 
-  # F7: tissue-stratified reversal heatmap
+  # F7: tissue-stratified reversal heatmap, one column per study.
+  # plot_f7() orders by tau itself: `reversal` arrives here re-sorted by the fgsea merge,
+  # and taking head() of it once plotted the alphabetically first signatures.
   if (!is.null(tissue_rev) && nrow(tissue_rev) > 0) {
-    # pick top 20 drugs by overall tau, show across tissues
-    top_drug_names <- head(reversal$signature, 20)
-    tr_sub <- tissue_rev[tissue_rev$signature %in% top_drug_names, ]
-    if (nrow(tr_sub) > 0) {
-      tr_sub$short_name <- sapply(tr_sub$signature, function(s) substr(s, 1, 40))
-      # average tau per tissue x drug
-      agg <- aggregate(tau ~ tissue + short_name, data = tr_sub, FUN = mean)
-      p7 <- ggplot2::ggplot(agg, ggplot2::aes(x = tissue, y = short_name, fill = tau)) +
-        ggplot2::geom_tile(color = "white") +
-        ggplot2::scale_fill_gradient2(low = "#0279EE", mid = "grey95", high = "#c0392b", midpoint = 0) +
-        ggplot2::labs(title = "Tissue-stratified reversal (tau-analog)",
-                      x = "tissue", y = "drug", fill = "tau") +
-        th + ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1, size = 8))
-      save_fig(p7, file.path(fig_dir, "F7_tissue_stratified_reversal"))
-    }
+    p7 <- plot_f7(reversal, tissue_rev, top_n = 20)
+    save_fig(p7, file.path(fig_dir, "F7_tissue_stratified_reversal"))
   }
 
   # F9: drug context summary (top compounds with MoA)

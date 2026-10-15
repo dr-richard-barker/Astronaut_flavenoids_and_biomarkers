@@ -28,8 +28,8 @@ reproducible oncogenic biomarker signature can be re-derived across human and
 rodent spaceflight transcriptomes, and whether existing drug perturbation
 signatures contain compounds that reverse it (``opposite forcing''), remains
 unresolved. We built a from-scratch R pipeline that (1) re-discovers the
-spaceflight oncogenic biomarker signature across 23 NASA OSDR RNA-seq studies (11
-human, 12 rodent) using strict differential expression thresholds
+spaceflight oncogenic biomarker signature across 23 NASA OSDR RNA-seq studies (10
+human, 13 rodent) using strict differential expression thresholds
 (\(p_{\mathrm{adj}} < 0.05\), \(|\text{log2FC}| > 1\)) and a random-effects
 meta-analysis (metafor REML), (2) screens 420 LINCS L1000 drug perturbation
 signatures for transcriptomic reversal via a tau-analog connectivity score, (3)
@@ -40,10 +40,10 @@ among the top reversal compounds. The meta-analysis scored 40{,}211 genes (3{,}6
 significant), whose intersection with an 11{,}241-gene oncogene union yielded
 \textbf{1{,}610 oncogenic biomarker genes}. Validation against an independent
 Python cross-study meta-signature (S2) showed Spearman \(\rho = 0.60\) and 76\%
-sign agreement. Twenty-one compounds exhibited maximal reversal (\(\tau = -100\)),
-led by the food-derived flavonoids \textbf{apigenin, luteolin, and licochalcone
-A}. Gene-level analysis revealed that \textbf{242 of the 1{,}540 assessable
-oncogenic biomarker genes (15.7\%)} were directly reversed (opposite direction,
+sign agreement. Seventeen perturbation signatures reached the maximal reversal score
+(\(\tau = -100\)) and four more scored below \(-50\); they include the
+food-derived flavonoids \textbf{apigenin, luteolin, and licochalcone A}. Gene-level analysis revealed that \textbf{242 of the 1{,}396 assessable
+oncogenic biomarker genes (17.3\%)} were directly reversed (opposite direction,
 \(|z| \geq 1.5\)) by at least one flavonoid signature, with 20 genes reversed by
 all three. The most strongly reversed genes were inflammatory chemokines and SASP
 factors (CXCL8, MMP3, CSF2, CSF3, CXCL3) down-regulated by spaceflight and
@@ -102,24 +102,28 @@ counter-regulate?
 
 We queried the NASA OSDR programmatically and curated a panel of 24 RNA-seq studies
 (11 human, 13 rodent) spanning spaceflight, simulated microgravity, hindlimb
-suspension, and ionising radiation across diverse tissues (cardiomyocytes,
-endothelial and vascular smooth muscle cells, skeletal muscle, neural organoids,
-spleen, thymus, liver, skin, eye, heart, bone, blood; Table~1, Fig.~\ref{fig:f1}).
+suspension, and ionising radiation (human: iPSC-derived cardiomyocytes and cardiac
+spheres, endothelial cells, aortic smooth muscle cells, myoblasts, mesenchymal stem
+cells, cortical and colorectal-cancer organoids, dermal fibroblasts and astronaut
+whole blood; mouse: liver, spleen, thymus, skin, eye, heart, soleus, cortical bone,
+hippocampus and adrenal gland; tissue labels from the OSDR study records; Table~1,
+Fig.~\ref{fig:f1}).
 Per-study differential expression (DESeq2; \(p_{\mathrm{adj}} < 0.05\),
 \(|\text{log2FC}| > 1\)) yielded 410{,}121 gene-level results across 23 studies with
-testable contrasts (Table~2, Fig.~\ref{fig:f2}). Rodent gene identifiers were
+testable contrasts (10 human, 13 rodent; the astronaut whole-blood study OSD-903
+produced no per-study result; Table~2, Fig.~\ref{fig:f2}). Rodent gene identifiers were
 mapped to human orthologs via biomaRt before meta-analysis.
 
 A random-effects meta-analysis (metafor REML) across all studies scored 40{,}211
-genes, of which 3{,}668 were significant at \(p_{\mathrm{adj}} < 0.05\) (Table~3,
-Fig.~\ref{fig:f3}). The signature was directionally heterogeneous: 502 genes were
-up-regulated and 1{,}108 down-regulated in spaceflight, consistent with tissue- and
-stressor-specific engagement of oncogenic programs. To focus on genes with
+genes, of which 3{,}668 were significant at \(p_{\mathrm{adj}} < 0.05\) (1{,}506
+up- and 2{,}162 down-regulated; Table~3, Fig.~\ref{fig:f3}). To focus on genes with
 oncogenic relevance, we intersected the meta-significant genes with an
 11{,}241-gene oncogene union (MSigDB C6 oncogenic signatures: 10{,}927; KEGG
 oncogenesis: 931; curated oncogene/TSG/SASP: 195; COSMIC CGC and OncoKB were
 attempted but gated --- see Methods), yielding \textbf{1{,}610 oncogenic biomarker
-genes} (Table~4, Fig.~\ref{fig:f4}).
+genes} (Table~4, Fig.~\ref{fig:f4}). Of these, 502 were up-regulated and 1{,}108
+down-regulated in spaceflight, consistent with tissue- and stressor-specific
+engagement of oncogenic programs.
 
 Validation against an independent Python cross-study meta-signature (S2) from our
 companion repository showed Spearman \(\rho = 0.60\), sign agreement 76\%, Jaccard
@@ -170,39 +174,49 @@ and an independent Python cross-study meta-signature (S2): Spearman \(\rho = 0.6
 \label{fig:f5}
 \end{figure}
 
-\subsection{Opposite-forcing drug screen identifies 21 reversal candidates}
+\subsection{Opposite-forcing drug screen: 17 signatures at maximal reversal}
 
 We screened 420 LINCS L1000 GEO drug perturbation signatures (z-score profiles over
 35{,}238 genes) for transcriptomic reversal of the 1{,}610 oncogenic biomarkers via
 a tau-analog weighted connectivity score (WCS; \cite{lamb2006,subramanian2017}
-formulation, tau-normalised across all drug signatures; Table~6). Twenty-one
-compounds exhibited maximal reversal (\(\tau = -100\); Table~7, Fig.~\ref{fig:f6}),
-including the food-derived flavonoids \textbf{apigenin and luteolin} (GSE128097),
-\textbf{licochalcone A} (GSE137934, a licorice-derived flavonoid), the MDM2
-inhibitor Nutlin-3, the topoisomerase inhibitor doxorubicin (Phase 3), PI3K-mTOR
-inhibitors, a combined MEKi+WNT treatment, the DNA methylation inhibitor
-5\('\)-Aza, methotrexate, the ALK5/TGF\(\beta\) inhibitor SB431542, and ketamine.
+formulation, tau-normalised across all drug signatures; Table~6). Seventeen
+signatures reached the maximal reversal score (\(\tau = -100\), the clipping floor,
+so they cannot be ranked against each other) and four more scored below \(-50\)
+(Table~7, Fig.~\ref{fig:f6}). They include the food-derived flavonoids
+\textbf{apigenin and luteolin} (GSE128097), \textbf{licochalcone A} (GSE137934, a
+licorice-derived flavonoid), the MDM2 inhibitor Nutlin-3, the topoisomerase
+inhibitor doxorubicin, PI3K-mTOR inhibitors, a combined MEKi+WNT treatment, the DNA
+methylation inhibitor 5\('\)-Aza, the ALK5/TGF\(\beta\) inhibitor SB431542,
+ketamine, and methotrexate (Caco2 co-exposure with lactoferrin;
+\(\tau = -99.3\)). Not every signature is a drug treatment: one is an siRNA
+knockdown (SUPT4H1), and several do not name the perturbagen in the signature
+title.
 
-Tissue-stratified reversal scoring across 19 tissues (4{,}620 tissue-drug
-combinations; Table~8, Fig.~\ref{fig:f7}) confirmed that reversal strength varies
-by tissue, consistent with the tissue-specific direction of oncogenic program
-engagement. Drug-target-indication context from the Broad Drug Repurposing Hub and
-PrimeKG (Table~9, Fig.~\ref{fig:f9}) annotated 7 of the top 50 hits with clinical
-phase, mechanism of action, and target information.
+Tissue-stratified reversal scores were computed for 11 of the 23 studies, covering
+8 tissue or cell types (4{,}620 study--signature scores; Table~8,
+Fig.~\ref{fig:f7}); reversal strength varied by study. Drug-target-indication
+context from the Broad Drug Repurposing Hub and PrimeKG (Table~9,
+Fig.~\ref{fig:f9}) was matched by name for 7 of the top 50 signatures. Four matches
+are exact (Nutlin-3, lapatinib, estradiol, tamoxifen); doxorubicin matched
+aldoxorubicin, a doxorubicin prodrug whose Phase~3 status is what Table~9 reports;
+and a stapled-peptide oestrogen-receptor inhibitor matched iRGD-peptide twice, which
+is spurious.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{F6_lincs_reversal_ranking.png}
-\caption{\textbf{LINCS reversal ranking.} Tau-analog connectivity scores across 420
-drug signatures; 21 compounds reach maximal reversal (\(\tau = -100\)).}
+\caption{\textbf{LINCS reversal ranking.} The 30 most negative of the 420 signatures
+by tau-analog connectivity score; 17 reach the maximal reversal score
+(\(\tau = -100\)). Data: Table~6.}
 \label{fig:f6}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{F7_tissue_stratified_reversal.png}
-\caption{\textbf{Tissue-stratified reversal.} Reversal strength across 19 tissues
-(4{,}620 tissue-drug combinations).}
+\caption{\textbf{Tissue-stratified reversal.} Tau of the 20 most negative signatures
+(rows) in each of the 11 studies with per-study scores (columns, labelled with the
+OSDR tissue). Data: Tables~6 and 8.}
 \label{fig:f7}
 \end{figure}
 
@@ -217,14 +231,15 @@ flavonoid signatures --- GSE128097\_1 (apigenin + luteolin co-treatment, \(\tau 
 and GSE137934\_1 (licochalcone A, \(\tau = -100\)) --- and compared each gene's
 compound z-score direction against its spaceflight meta-log2FC direction.
 
-Of the 1{,}610 oncogenic biomarker genes, 1{,}540 (95.7\%) were present in the
-LINCS gene space; the remaining 70 (non-protein-coding or unmapped identifiers)
-were excluded. A gene was defined as ``directly reversed'' when its spaceflight
+Of the 1{,}610 oncogenic biomarker genes, 1{,}396 had a non-zero LINCS z-score in at
+least one of the three flavonoid signatures (1{,}284--1{,}308 per signature) and
+were assessable; the other 214 were absent from the LINCS gene space or had no
+measurable z-score, and were excluded. A gene was defined as ``directly reversed'' when its spaceflight
 direction (sign of mean log2FC) was opposite to its compound z-score direction,
 with \(|z| \geq 1.5\) (a moderate LINCS effect threshold; sensitivity analyses at
 \(|z| \geq 2\) and \(|z| \geq 3\) are reported).
 
-\textbf{242 unique oncogenic biomarker genes (15.7\% of the 1{,}540 assessable)
+\textbf{242 unique oncogenic biomarker genes (17.3\% of the 1{,}396 assessable)
 were directly reversed by at least one flavonoid signature at \(|z| \geq 1.5\)}
 (Table~13c, Fig.~\ref{fig:f11}). Of these, 20 were reversed by all three
 signatures, 87 by two, and 135 by one. Per-signature reversal counts were:
@@ -259,9 +274,11 @@ scoring.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{F11_gene_level_reversal.png}
-\caption{\textbf{Gene-level reversal.} Oncogenic biomarker genes directly reversed
-by the three flavonoid signatures (\(|z| \geq 1.5\)); 242 genes reversed by at
-least one.}
+\caption{\textbf{Gene-level reversal.} (a) Reversed and concordant oncogenic
+biomarker genes for each flavonoid signature at \(|z| \geq 1.5\), 2 and 3
+(Table~13b). (b) Spaceflight meta-log2FC versus compound z-score for GSE128097\_1.
+242 genes are reversed by at least one signature at \(|z| \geq 1.5\). Data:
+Table~13.}
 \label{fig:f11}
 \end{figure}
 
@@ -277,7 +294,7 @@ showing spaceflight meta-log2FC versus flavonoid compound z-scores.}
 
 To validate that the 1{,}610 oncogenic biomarker genes are biologically linked to
 disease phenotypes rather than noise, we performed hypergeometric enrichment
-against PrimeKG (160{,}822 disease-gene edges) \cite{chandrasekharan2023} and
+against PrimeKG (160{,}822 disease-gene edges) \cite{chandak2023} and
 gene-disease association scoring via the Open Targets GraphQL API \cite{ochoa2023}.
 
 PrimeKG yielded 389 significant diseases (\(p_{\mathrm{adj}} < 0.05\); Table~10),
@@ -336,9 +353,9 @@ Across a cross-species panel of 23 spaceflight RNA-seq studies, we re-derived a
 1{,}610-gene oncogenic biomarker signature that concords with an independent Python
 meta-analysis (Spearman \(\rho = 0.60\)) and enriches for carcinoma, coronary
 artery disease, and hereditary cancer syndromes. Screening LINCS L1000 drug
-perturbation signatures identified 21 compounds with maximal transcriptomic
-reversal (\(\tau = -100\)), led by food-derived flavonoids. Gene-level analysis
-revealed that 242 oncogenic biomarker genes (15.7\% of assessable) are directly
+perturbation signatures identified 17 signatures with maximal transcriptomic
+reversal (\(\tau = -100\)), including food-derived flavonoids. Gene-level analysis
+revealed that 242 oncogenic biomarker genes (17.3\% of assessable) are directly
 reversed by at least one flavonoid signature, with inflammatory chemokines and SASP
 factors (CXCL8, MMP3, CSF2, CSF3, CXCL3) most strongly counter-regulated.
 
@@ -367,8 +384,8 @@ and luteolin; gene-level effects cannot be attributed to one compound alone. (3)
 LINCS z-scores lack per-gene p-values, so the \(|z| \geq 1.5\) threshold is an
 effect-size cutoff, not a statistical test; the reversal score is descriptive. (4)
 COSMIC CGC and OncoKB were gated; the oncogene union relied on MSigDB C6
-\cite{liberzon2015}, KEGG, and curated lists. (5) The 70 T4 genes absent from LINCS
-were excluded from gene-level analysis. (6) These are transcriptomic associations,
+\cite{liberzon2015}, KEGG, and curated lists. (5) The 214 T4 genes without a non-zero
+LINCS z-score in any flavonoid signature were excluded from gene-level analysis. (6) These are transcriptomic associations,
 not evidence of efficacy in vivo; the flavonoid reversal candidates require
 prospective validation in spaceflight-relevant model systems. (7) Vegan recipe
 optimisation is deferred; this pipeline provides the nutraceutical-gene input
@@ -378,9 +395,12 @@ optimisation is deferred; this pipeline provides the nutraceutical-gene input
 We queried the NASA OSDR API \cite{beheshti2023} for human and rodent RNA-seq
 studies with processed count matrices and a testable
 spaceflight/microgravity/radiation contrast, yielding 24 studies (11 human, 13
-rodent; Table~1). JAXA6 astronaut whole-blood data were obtained from the
-Astronaut\_flavenoids\_and\_biomarkers GitHub repository. Raw STAR unnormalised count matrices
-were downloaded per study.
+rodent; Table~1), of which 23 (10 human, 13 rodent) produced per-study results.
+Tissue labels follow the OSDR study records. The pipeline also clones the
+Astronaut\_flavenoids\_and\_biomarkers repository, which holds JAXA Cell-Free
+Epigenome astronaut plasma cell-free RNA data (OSD-530); no analysis step reads
+these data and no result reported here depends on them. Raw STAR unnormalised count
+matrices were downloaded per study.
 
 \subsection{Differential expression}
 Per-study DESeq2 analysis was run with the contrast
@@ -414,24 +434,27 @@ signatures (clipped to \(\pm 100\)). A strongly negative tau indicates reversal.
 
 \subsection{Gene-level reversal}
 For the three flavonoid signatures (GSE128097\_1, GSE128097\_2, GSE137934\_1), we
-extracted the z-score vector over all genes and intersected with the 1{,}610
-oncogenic biomarkers (1{,}540 overlap). A gene was ``directly reversed'' when
+extracted the z-score vector over all genes and intersected it with the 1{,}610
+oncogenic biomarkers, keeping genes with a non-zero z-score (1{,}284--1{,}308 per
+signature; 1{,}396 in at least one). A gene was ``directly reversed'' when
 \(\operatorname{sign}(\text{spaceflight mean log2FC}) \times \operatorname{sign}
 (\text{compound } z) < 0\) and \(|z| \geq 1.5\). Reversal score \(=
 -\operatorname{sign}(\text{mean\_lfc}) \times z \times |\text{mean\_lfc}|\).
 Sensitivity thresholds \(|z| \geq 2\) and \(|z| \geq 3\) are reported.
 
 \subsection{Disease enrichment}
-PrimeKG disease-gene edges (160{,}822) \cite{chandrasekharan2023} were tested for
-hypergeometric enrichment of the 1{,}610 oncogenic biomarkers (universe = all genes
-in PrimeKG disease-gene edges; BH-adjusted p-values). The Open Targets GraphQL API
+PrimeKG disease-gene edges (160{,}822) \cite{chandak2023} were tested for
+hypergeometric enrichment of the 1{,}610 oncogenic biomarkers (fixed universe of
+20{,}000 genes, approximating the protein-coding genome; BH-adjusted p-values). The Open Targets GraphQL API
 (v4) \cite{ochoa2023} was queried for 100 genes, returning 4{,}891 gene-disease
 associations across 1{,}689 diseases. A combined ranking integrated both sources.
 
 \subsection{Drug context}
 The Broad Drug Repurposing Hub (6{,}798 drugs; clinical phase, MoA, target,
 indication) and PrimeKG drug-target (51{,}306 edges) and contraindication (61{,}350
-edges) networks were used to annotate the top 50 reversal hits.
+edges) networks were used to annotate the top 50 reversal hits. Drug names were
+matched by case-insensitive substring, which produced inexact matches (see
+Results).
 
 \subsection{Nutraceutical flagging}
 A curated 176-compound lexicon (17 classes) was cross-matched against the top 50

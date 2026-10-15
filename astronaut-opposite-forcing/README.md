@@ -18,7 +18,7 @@ An **opposite-forcing** compound is one whose transcriptomic perturbation signat
 
 | Step | Script | What it does |
 |---|---|---|
-| 01 | `scripts/01_OSD_query.R` | Download 24 OSDR studies (11 human + 13 rodent) + JAXA6 from GitHub |
+| 01 | `scripts/01_OSD_query.R` | Download 24 OSDR studies (11 human + 13 rodent); also clones this repository, whose JAXA data are not used downstream |
 | 02 | `scripts/02_biomarker_identification.R` | Per-study DESeq2 (padj<0.05, \|log2FC\|>1) + metafor random-effects meta-analysis + oncogene union intersection |
 | 03 | `scripts/03_drug_screening.R` | LINCS tau-analog reversal scoring + Broad Drug Repurposing Hub + PrimeKG drug context + tissue stratification |
 | 04 | `scripts/04_enrichment.R` | PrimeKG disease-gene hypergeometric enrichment + Open Targets API disease associations |
@@ -69,7 +69,7 @@ Rscript run_all.R --from 04
 | Source | Use | Access |
 |---|---|---|
 | NASA OSDR (GeneLab) | Human + rodent spaceflight RNA-seq | Public API |
-| JAXA6 astronaut data | Human in-vivo validation | GitHub: `Astronaut_flavenoids_and_biomarkers` |
+| JAXA CFE astronaut plasma cfRNA (OSD-530) | Not used by the pipeline (cloned by script 01 only) | GitHub: `Astronaut_flavenoids_and_biomarkers`, `data/` |
 | LINCS L1000 GEO signatures | Drug perturbation z-scores for tau-analog | Datalake |
 | LINCS single-drug GMT | Drug up/down gene sets for fgsea cross-check | Datalake |
 | Broad Drug Repurposing Hub | Drug phase / MoA / target / indication | Datalake (parquet) |
@@ -105,10 +105,13 @@ Rscript run_all.R --from 04
 The scripts write these to `results/tables/`; this repository stores them in `tables/`.
 T2 is stored gzipped (`tables/T2_per_study_DE.csv.gz`, 22 MB; the plain CSV is 51.5 MB).
 Run `gunzip -k` on it before running script 03, which reads the plain CSV.
+T1's tissue labels follow the OSDR study records (corrected 2026-10-14); T8's `tissue`
+column keeps the labels of the run that produced it (OSD-811 and OSD-993 appear there as
+`mixed_cell`). `scripts/redraw_figures_from_tables.R` redraws F7 and F11 from these tables.
 
 | Table | Rows | Description |
 |---|---|---|
-| T1 | 24 | Dataset panel (accession, tissue, species, factor, sample counts) |
+| T1 | 24 | Dataset panel (accession, tissue, system, factor, species; the sample-count columns are empty) |
 | T2 (CSV.gz) | 410,121 | Per-study DESeq2 results |
 | T3 (TSV) | 40,211 | Genome-wide meta-signature (metafor REML) |
 | T4 | 1,610 | Oncogenic biomarker intersection (meta-significant AND oncogene union) |
@@ -117,8 +120,8 @@ Run `gunzip -k` on it before running script 03, which reads the plain CSV.
 | T5b | 19,484 | R vs S2 joined gene-level comparison |
 | T6 | 420 | LINCS tau-analog reversal scores (all drugs) |
 | T6b | 948 | fgsea cross-check (drug up/down gene sets) |
-| T7 | 50 | Top opposite-forcing candidates (tau < -50) |
-| T8 | 4,620 | Tissue-stratified reversal scores (19 tissues x drugs) |
+| T7 | 50 | Top 50 signatures by tau (21 with tau < -50) |
+| T8 | 4,620 | Per-study reversal scores (11 studies x 420 signatures) |
 | T9 | 50 | Drug context (Broad phase, MoA, target, indication, PrimeKG) |
 | T10 | 3,160 | PrimeKG disease enrichment (hypergeometric) |
 | T10b | 2,898 | Combined PrimeKG + Open Targets disease ranking |
@@ -136,10 +139,10 @@ Run `gunzip -k` on it before running script 03, which reads the plain CSV.
 
 - **Meta-signature**: 40,211 genes tested across 23 studies; 3,668 significant at padj<0.05. Intersection with an 11,241-gene oncogene union (MSigDB C6 + KEGG + curated) yields **1,610 oncogenic biomarker genes**.
 - **Validation**: R rebuild vs Python S2 reference — Spearman rho = 0.60, sign agreement 76%, Jaccard top-100 = 0.19, top-500 = 0.28.
-- **Drug reversal**: 21 compounds at tau = -100 (strongest reversal), 50 in top table. Top hits include apigenin/luteolin (food-derived flavonoids), Nutlin-3 (MDM2 inhibitor), doxorubicin (topoisomerase inhibitor, Phase 3), PI3K-mTOR inhibitors, MEKi+WNT, licochalcone A, 5'-Aza, methotrexate, SB431542, ketamine.
+- **Drug reversal**: 17 signatures at tau = -100 (the clipping floor) and 21 below -50; 50 in the top table. They include apigenin/luteolin (food-derived flavonoids), Nutlin-3 (MDM2 inhibitor), doxorubicin (topoisomerase inhibitor), PI3K-mTOR inhibitors, MEKi+WNT, licochalcone A, 5'-Aza, SB431542, ketamine and methotrexate (tau = -99.3). One is an siRNA knockdown (SUPT4H1), not a drug.
 - **Disease enrichment**: 389 significant diseases (PrimeKG padj<0.05) — top: sarcomatoid carcinoma, undifferentiated carcinoma, coronary artery disease, prostate cancer, hereditary breast/ovarian cancer, fatty liver disease. Open Targets adds neoplasm, hepatocellular carcinoma, breast carcinoma, NSCLC, glioblastoma, melanoma.
 - **Nutraceuticals**: 5 unique compounds flagged among top-50 — **luteolin** (tau=-100, 3 evidence streams), **apigenin** (tau=-100), **licochalcone A** (tau=-100), licochalcone, isoginkgetin (tau=+8.7, NOT a reversal — same direction as spaceflight).
-- **Gene-level reversal by flavonoids**: 242 of 1,540 assessable oncogenic biomarker genes (15.7%) directly reversed (opposite direction, |z|>=1.5) by at least one of the 3 flavonoid signatures (apigenin+luteolin GSE128097_1/2, licochalcone A GSE137934_1). 20 genes reversed by all 3 signatures. Top reversed genes: CXCL8, MMP3, CSF2, CSF3, CXCL3 (inflammatory/SASP chemokines down in spaceflight, up by flavonoids). See T13/T13b/T13c and F11/F12.
+- **Gene-level reversal by flavonoids**: 242 of 1,396 assessable oncogenic biomarker genes (17.3%) directly reversed (opposite direction, |z|>=1.5) by at least one of the 3 flavonoid signatures (apigenin+luteolin GSE128097_1/2, licochalcone A GSE137934_1). 20 genes reversed by all 3 signatures. Top reversed genes: CXCL8, MMP3, CSF2, CSF3, CXCL3 (inflammatory/SASP chemokines down in spaceflight, up by flavonoids). See T13/T13b/T13c and F11/F12.
 
 ---
 
@@ -152,8 +155,8 @@ Script `07_gene_level_reversal.R` examines which of the 1,610 oncogenic biomarke
 | Metric | Value |
 |---|---|
 | T4 oncogenic biomarkers | 1,610 |
-| T4 genes in LINCS | 1,540 (70 missing) |
-| Reversed at \|z\|>=1.5 (union) | **242 genes (15.7%)** |
+| T4 genes assessable (non-zero z in ≥1 signature) | 1,396 (214 excluded; 1,284–1,308 per signature) |
+| Reversed at \|z\|>=1.5 (union) | **242 genes (17.3%)** |
 | Reversed at \|z\|>=2 (union) | 148 genes |
 | Reversed at \|z\|>=3 (union) | 67 genes |
 | Reversed by all 3 signatures | 20 genes |
@@ -201,11 +204,11 @@ The reversed genes are dominated by inflammatory chemokines and SASP factors tha
 
 1. **COSMIC CGC and OncoKB are gated.** Both were attempted (COSMIC all URLs failed; OncoKB HTTP 401). The oncogene union fell back to MSigDB C6 (10,927 genes) + KEGG oncogenesis (931) + curated (195) = 11,241 genes. This is documented in T4a.
 
-2. **LINCS tau-analog is a local approximation, not canonical CLUE Touchstone.** WCS values are near-zero for most drugs (the connectivity condition filters most to 0), so tau-normalization clips at +/-100. The 21 drugs at tau=-100 are genuine reversal candidates; the ranking is correct but the absolute tau values are compressed. See `R/lincs_reversal.R` for implementation.
+2. **LINCS tau-analog is a local approximation, not canonical CLUE Touchstone.** WCS values are near-zero for most drugs (the connectivity condition filters most to 0), so tau-normalization clips at +/-100. 17 signatures sit at the tau = -100 clip (21 are below -50) and cannot be ranked against each other; absolute tau values are compressed. See `R/lincs_reversal.R` for implementation.
 
-3. **Drug-name extraction from GEO signature titles is imperfect.** Many signatures don't follow the "treatment with X" pattern, so `extract_drug_name()` falls back to GSE IDs. 7/50 top drugs matched Broad/PrimeKG context. The full signature string is preserved in all tables for manual review.
+3. **Drug-name extraction from GEO signature titles is imperfect.** Many signatures don't follow the "treatment with X" pattern, so `extract_drug_name()` falls back to GSE IDs. 7 of the top 50 matched a Broad Hub entry by name, but only 4 exactly (Nutlin-3, lapatinib, estradiol, tamoxifen): doxorubicin matched aldoxorubicin (so the Phase 3 label in T9 belongs to aldoxorubicin), and a stapled-peptide ER inhibitor matched iRGD-peptide twice (spurious). The full signature string is preserved in all tables for manual review.
 
-4. **PrimeKG disease enrichment universe** is all genes appearing in PrimeKG disease-gene edges (160,822 edges), not the full genome. This is standard practice for hypergeometric enrichment over a knowledge graph but inflates overlap p-values slightly compared to a genome-wide universe.
+4. **PrimeKG disease enrichment universe** is a fixed 20,000 genes (`UNIVERSE_SIZE` in `scripts/04_enrichment.R`), approximating the protein-coding genome, not the set of genes tested in the meta-analysis. The p-values depend on this choice.
 
 5. **F2 QC PCA is per-study, not cross-study.** Studies use different platforms, gene spaces, and species, so cross-study PCA would confound biology with batch. Per-study PCA correctly shows whether treated vs control separates within each study.
 
@@ -228,7 +231,7 @@ The reversed genes are dominated by inflammatory chemokines and SASP factors tha
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT — see [LICENSE](../LICENSE).
 
 ## Citation
 
