@@ -161,7 +161,7 @@ their own terms; cite the original accessions.
 
 ## Citation
 
-> **TODO:** add co-authors (ORCID), affiliation, and DOI once available.
+> **TODO:** add co-authors (with ORCIDs) and a DOI once available.
 
 Barker, R. et al. (2026). *Spaceflight oncogenic biomarkers and their
 transcriptomic reversal by food-derived flavonoids: an R pipeline for

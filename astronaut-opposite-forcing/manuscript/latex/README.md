@@ -27,8 +27,8 @@ latex/
 
 - [ ] **Not yet compile-tested** — authored without a local TeX install; build
       once on Overleaf and fix any stragglers.
-- [ ] **Author block** — co-authors and affiliation are `TODO` in `main.tex`
-      (the source marks them "co-authors TBD", affiliation TODO).
+- [ ] **Author block** — co-authors are `TODO` in `main.tex` (the source marks them
+      "co-authors TBD"); the affiliation is Collaborative Science Environment Inc., Madison, Wisconsin, USA.
 - [ ] **Tables 1–13** — the manuscript references numbered tables (T1–T13, incl.
       sub-tables). The machine-readable CSVs are in `../../tables/`; typeset the
       key ones as LaTeX tables and/or bundle the rest as supplementary data per

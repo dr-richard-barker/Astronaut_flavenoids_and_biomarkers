@@ -2,7 +2,7 @@
 
 **Richard Barker¹\*** *(co-authors TBD)*
 
-¹ *[Affiliation — TODO]*
+¹ *Collaborative Science Environment Inc., Madison, Wisconsin, USA*
 \* Correspondence: admin@cosecloud.com
 
 *Prepared for submission to* npj Microgravity. *Independent research; not affiliated with or endorsed by NASA or JAXA.*
