@@ -1,5 +1,9 @@
 # Plan: Gene-level reversal of oncogenic biomarkers by luteolin, apigenin, and licochalcone A
 
+> **Historical plan**, written before `scripts/07_gene_level_reversal.R` ran. Where the outputs differ from
+> what was planned or expected, the tables in `astronaut-opposite-forcing/tables/` are authoritative; the
+> differences are marked *as run* below (checked against T13/T13b on 2026-10-15).
+
 ## Summary
 
 Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed at the gene level by the three flavonoid LINCS signatures (GSE128097_1, GSE128097_2, GSE137934_1), using the LINCS z-score matrix. A gene is "directly reversed" when its spaceflight meta-log2FC direction is opposite to its LINCS compound z-score direction, with |z| ≥ 1.5 (moderate effect). Then create a manuscript.md for the repo and update README.md with the gene-level reversal findings.
@@ -11,13 +15,13 @@ Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed
   - `GSE128097_1` — apigenin+luteolin co-treatment, tau=-100 (reversal)
   - `GSE128097_2` — apigenin+luteolin second sub-signature, tau=+8.7 (NOT a reversal at the WCS level, but included per user request for per-gene comparison)
   - `GSE137934_1` — licochalcone A, tau=-100 (reversal)
-- **T4 → LINCS overlap**: 1,540 of 1,610 T4 genes are present in the LINCS gene columns (70 missing, likely non-protein-coding or unmapped IDs).
+- **T4 → LINCS overlap**: 1,540 of 1,610 T4 genes are present in the LINCS gene columns (70 missing). *As run:* only genes with a non-zero z-score are kept, so 1,284–1,308 T4 genes are assessable per signature and 1,396 in at least one (214 excluded).
 - **Z-score distributions** (measured):
   - GSE128097_1: range [-7.5, 8.5], sd=0.82; among T4 genes: 433 at |z|≥1, 244 at |z|≥1.5, 140 at |z|≥2
   - GSE128097_2: range [-7.0, 9.4], sd=0.97; among T4: 494 at |z|≥1, 263 at |z|≥1.5, 159 at |z|≥2
   - GSE137934_1: range [-7.6, 8.3], sd=0.68; among T4: 358 at |z|≥1, 202 at |z|≥1.5, 114 at |z|≥2
 - **Reversal ratios** (opposite sign / total with |z|≥threshold):
-  - At |z|≥1.5: 0.52–0.55 (slight reversal enrichment)
+  - At |z|≥1.5: 0.49–0.55 (licochalcone A 0.49, i.e. no reversal enrichment; the two apigenin+luteolin signatures 0.52 and 0.55)
   - At |z|≥2: 0.52–0.56
   - At |z|≥3: 0.60–0.70 (strong enrichment, but only ~27–39 genes)
 
@@ -25,14 +29,14 @@ Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed
 
 1. **Signature scope**: All 3 flavonoid signatures (GSE128097_1, GSE128097_2, GSE137934_1), per user request. Report per-signature results so GSE128097_2 (non-reversal at WCS level) can be compared gene-by-gene.
 
-2. **Z-score threshold**: **|z| ≥ 1.5** as primary (moderate LINCS effect; ~130–140 reversed genes per signature; reversal ratio 0.52–0.55). Report |z|≥2 and |z|≥3 as sensitivity thresholds in the same table.
+2. **Z-score threshold**: **|z| ≥ 1.5** as primary (moderate LINCS effect; ~130–140 reversed genes per signature planned; *as run:* 99–136, reversal ratio 0.49–0.55). Report |z|≥2 and |z|≥3 as sensitivity thresholds in the same table.
 
 3. **Significance filter**: A gene is "directly reversed" if ALL of:
    - (a) present in T4 (1,610 oncogenic biomarkers)
    - (b) present in the LINCS signature (non-zero z-score)
    - (c) `sign(mean_lfc) * sign(z) < 0` (opposite direction)
    - (d) `|z| ≥ 1.5`
-   The full ranked table (all 1,540 overlapping T4 genes with their z-scores and reversal status at each threshold) is also output so readers can apply their own cutoff.
+   The full ranked table (every T4 gene with a non-zero z-score — 1,284–1,308 per signature *as run* — with their z-scores and reversal status at each threshold) is also output so readers can apply their own cutoff.
 
 4. **Reversal strength metric**: `reversal_score = -sign(mean_lfc) * z * |mean_lfc|` — positive when reversed, larger when both the spaceflight effect and the compound counter-effect are strong. Used for ranking.
 
@@ -48,7 +52,7 @@ Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed
 1. Load T4; load LINCS matrix (data.table::fread, ~30s on heavy machine).
 2. Identify the 3 flavonoid signatures by grep on row names.
 3. For each signature, extract the z-score vector over all 35,238 genes.
-4. Intersect with T4 genes (expect ~1,540 overlap).
+4. Intersect with T4 genes (expect ~1,540 overlap; *as run:* 1,540 present, 1,284–1,308 per signature with a non-zero z).
 5. For each overlapping T4 gene, compute:
    - `spaceflight_dir` = sign(mean_lfc)
    - `compound_z` = LINCS z-score
@@ -59,7 +63,7 @@ Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed
 6. Bind per-signature results into a long table + a wide table (genes × signatures).
 
 **Outputs** (to `results/tables/`):
-- **T13_gene_level_reversal.csv** — long format: one row per (gene × signature), columns: gene, class, source, mean_lfc, padj, n_studies, direction_concordance, signature, compound_label (apigenin+luteolin_1 / apigenin+luteolin_2 / licochalcone_A), compound_z, reversed, reversed_z1.5, reversed_z2, reversed_z3, reversal_score. ~4,620 rows (1,540 × 3).
+- **T13_gene_level_reversal.csv** — long format: one row per (gene × signature), columns: gene, class, source, mean_lfc, padj, n_studies, direction_concordance, signature, compound_label (apigenin+luteolin_1 / apigenin+luteolin_2 / licochalcone_A), compound_z, reversed, reversed_z1.5, reversed_z2, reversed_z3, reversal_score. ~4,620 rows (1,540 × 3) planned; *as run:* 3,895 rows, because genes with a zero or missing z are dropped per signature.
 - **T13b_gene_level_reversal_summary.csv** — per-signature counts: n_T4_overlap, n_reversed_z1.5, n_reversed_z2, n_reversed_z3, n_concordant_z1.5, reversal_ratio_z1.5, etc. 3 rows.
 - **T13c_reversed_genes_union.csv** — the union of genes reversed at |z|≥1.5 by ANY of the 3 signatures, with per-gene: which signature(s) reversed it, spaceflight direction, max |z| across signatures, max reversal_score. This is the headline "genes directly reversed by flavonoids" list.
 
@@ -73,7 +77,7 @@ Identify which of the 1,610 oncogenic biomarker genes (T4) are directly reversed
 
 Create a new manuscript.md for the astronaut-opposite-forcing repo in npj Microgravity format (matching the reference Python repo's style). Structure:
 - Title, author (Richard Barker, admin@cosecloud.com), affiliation TODO
-- Abstract (~250 words) covering: pipeline purpose, 1,610 oncogenic biomarkers, 21 reversal candidates at tau=-100, gene-level reversal by flavonoids, disease enrichment
+- Abstract (~250 words) covering: pipeline purpose, 1,610 oncogenic biomarkers, 21 reversal candidates at tau=-100 (*as run:* 17 signatures at tau = -100 and 21 below -50), gene-level reversal by flavonoids, disease enrichment
 - Introduction (spaceflight oncogenic risk, opposite-forcing concept, LINCS L1000 rationale)
 - Results sections:
   1. Spaceflight oncogenic biomarker signature (1,610 genes, metafor REML, validation vs S2)
@@ -112,7 +116,7 @@ Add a new section "## Gene-level reversal by flavonoids" after the "Key results"
 
 ## Assumptions
 
-- The 70 T4 genes not found in LINCS (1,610 → 1,540 overlap) are excluded with a note in the manuscript methods.
+- The 70 T4 genes not found in LINCS (1,610 → 1,540 overlap) are excluded with a note in the manuscript methods. *As run:* 214 T4 genes have no non-zero z in any signature and are excluded; the manuscript methods say so.
 - GSE128097 contains apigenin AND luteolin as co-treatment — gene-level effects cannot be attributed to one compound alone; the manuscript will state this clearly.
 - GSE128097_2 is included per user request even though its WCS-level tau is +8.7 (not a reversal); the per-gene analysis may still show individual reversed genes.
 - The reversal_score is a descriptive ranking metric, not a statistical test (LINCS z-scores don't carry per-gene p-values).
