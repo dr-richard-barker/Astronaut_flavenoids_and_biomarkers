@@ -89,8 +89,8 @@ Rscript run_all.R --from 04
 | F1 | Dataset panel overview (study x tissue x species x factor) |
 | F2 | Per-study QC PCA (DESeq2 vst, blind = TRUE) |
 | F3 | Meta-signature volcano (log2FC vs -log10 p) |
-| F4 | Oncogene intersection (UpSet) |
-| F4b | Oncogene union by source class |
+| F4 | Oncogenic biomarker genes by oncogene-union source (bar chart) |
+| F4b | Oncogenic biomarker genes by gene class (bar chart) |
 | F5 | R vs S2 validation concordance (Spearman + sign agreement + Jaccard) |
 | F6 | LINCS reversal ranking (tau distribution) |
 | F7 | Tissue-stratified reversal heatmap |
