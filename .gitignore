@@ -1,0 +1,2 @@
+# ABAI attestation (local record of /abai check; goes stale on every commit)
+.abai/
