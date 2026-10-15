@@ -7,7 +7,7 @@ authors:
     given-names: Richard
     email: admin@cosecloud.com
     affiliation: "TODO"
-    # orcid: "https://orcid.org/TODO"
+    orcid: "https://orcid.org/0000-0001-5681-9857"
 keywords:
   - spaceflight
   - microgravity
@@ -24,7 +24,7 @@ keywords:
   - PrimeKG
   - Open Targets
 license: MIT
-repository-code: "https://github.com/dr-richard-barker/astronaut-opposite-forcing"
+repository-code: "https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers"
 version: "1.0.0"
 date-released: "2026-07-19"
 preferred-citation:
@@ -34,5 +34,6 @@ preferred-citation:
     - family-names: Barker
       given-names: Richard
       email: admin@cosecloud.com
+      orcid: "https://orcid.org/0000-0001-5681-9857"
   year: 2026
-  url: "https://github.com/dr-richard-barker/astronaut-opposite-forcing"
+  url: "https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing"

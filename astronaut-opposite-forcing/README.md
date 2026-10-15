@@ -41,8 +41,8 @@ Helper functions live in `R/` (sourced by the scripts):
 
 ```bash
 # Clone
-git clone https://github.com/dr-richard-barker/astronaut-opposite-forcing.git
-cd astronaut-opposite-forcing
+git clone https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers.git
+cd Astronaut_flavenoids_and_biomarkers/astronaut-opposite-forcing
 
 # Restore R environment (renv)
 install.packages("renv")
@@ -237,7 +237,7 @@ MIT — see [LICENSE](../LICENSE).
 
 See [CITATION.cff](CITATION.cff). If you use this software, please cite:
 
-> Barker, R. (2026). astronaut-opposite-forcing: An R pipeline for spaceflight oncogenic biomarker discovery and transcriptomic reversal (opposite-forcing) drug screening. https://github.com/dr-richard-barker/astronaut-opposite-forcing
+> Barker, R. (2026). astronaut-opposite-forcing: An R pipeline for spaceflight oncogenic biomarker discovery and transcriptomic reversal (opposite-forcing) drug screening. https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing
 
 ## Related
 
