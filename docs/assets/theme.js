@@ -33,17 +33,29 @@
   var themeBtn = el("button", {class:"cose-theme-btn",
     "aria-label":"Toggle light or dark theme", title:"Toggle light / dark"});
   topbar.appendChild(brand); topbar.appendChild(toggle);
+  // "All projects" link back to the COSE hub (from the shared registry)
+  var HUB = (window.BARKER_SITES && window.BARKER_SITES.hub) || "";
+  if(HUB && slug !== "cose-hub"){
+    var hubLink = el("a", {class:"cose-hub-btn", href:HUB,
+      title:"All projects — COSE hub", "aria-label":"All projects — COSE hub"});
+    hubLink.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/></svg>';
+    topbar.appendChild(hubLink);
+  }
   if(document.body.getAttribute("data-cose-themetoggle") !== "off"){ topbar.appendChild(themeBtn); }
 
   var bar = el("nav", {class:"sitebar", "aria-label":"Site and document map"});
-  var switcher = el("div", {class:"switch", role:"tablist"});
+  var switcher = el("div", {class:"cose-switch", role:"tablist"});
   var tabDoc  = tab("On this page", true);
   var tabSite = tab("All projects", false);
   switcher.appendChild(tabDoc); switcher.appendChild(tabSite);
 
-  var docPanel  = el("div", {class:"panel", id:"panel-doc"});
-  var sitePanel = el("div", {class:"panel", id:"panel-site", hidden:""});
+  var docPanel  = el("div", {class:"cose-panel", id:"panel-doc"});
+  var sitePanel = el("div", {class:"cose-panel", id:"panel-site", hidden:""});
   bar.appendChild(switcher); bar.appendChild(docPanel); bar.appendChild(sitePanel);
+
+  /* drag handle on the rail's right edge to resize the panel width */
+  var resizeH = el("div", {class:"cose-resize", "aria-hidden":"true", title:"Drag to resize"});
+  bar.appendChild(resizeH);
 
   var scrim = el("div", {class:"map-scrim"});
 
@@ -117,30 +129,111 @@
   if(!links.length){ docPanel.appendChild(hint("No sections on this page.")); }
 
   /* ---------- site map (from registry) ---------- */
-  sitePanel.appendChild(header4("All projects"));
   var reg = window.BARKER_SITES;
+  // Optional "scope": a named subset of the registry (reg.scopes[name] = {label, ids}).
+  // A themed hub links with ?cose_scope=NAME; it's remembered per-tab in
+  // sessionStorage, limits the site map to that subset, and is carried forward
+  // on the rail's links so navigation stays within the subset.
+  var SCOPE = "", scopeIds = null, scopeLabel = "";
+  try {
+    var qs = new URLSearchParams(location.search), sc = qs.get("cose_scope");
+    if(sc !== null){ if(sc){ sessionStorage.setItem("cose.scope", sc); } else { sessionStorage.removeItem("cose.scope"); } }
+    else { sc = sessionStorage.getItem("cose.scope"); }
+    if(sc && reg && reg.scopes && reg.scopes[sc]){ SCOPE = sc; scopeIds = reg.scopes[sc].ids; scopeLabel = reg.scopes[sc].label || sc; }
+  } catch(e){}
+  function inScope(it){ return !scopeIds || scopeIds.indexOf(it.id) >= 0; }
+  function withScope(url){ return SCOPE ? url + (url.indexOf("?") >= 0 ? "&" : "?") + "cose_scope=" + encodeURIComponent(SCOPE) : url; }
+
+  if(SCOPE){
+    var sh = el("div"); sh.style.cssText = "padding:0 20px 2px;display:flex;justify-content:space-between;align-items:baseline;gap:8px";
+    var sh4 = el("h4"); sh4.textContent = scopeLabel; sh4.style.margin = "0"; sh.appendChild(sh4);
+    var allLink = el("a", {href: location.pathname + "?cose_scope="});
+    allLink.textContent = "show all"; allLink.style.cssText = "font-size:.72rem;color:var(--muted);text-decoration:none";
+    sh.appendChild(allLink); sitePanel.appendChild(sh);
+  } else {
+    sitePanel.appendChild(header4("All projects"));
+  }
+
+  /* search box directly under "All projects" */
+  var searchWrap = el("div", {class:"cose-search-wrap"});
+  searchWrap.style.cssText = "padding:6px 20px 8px;position:relative;";
+  var searchInput = el("input", {
+    type: "search",
+    class: "cose-search-input",
+    placeholder: "Search projects...",
+    "aria-label": "Search projects"
+  });
+  searchInput.style.cssText = "width:100%;padding:6px 28px 6px 10px;font-size:0.84rem;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);outline:none;box-sizing:border-box;font-family:inherit;";
+  var searchClear = el("button", {type:"button", class:"cose-search-clear", title:"Clear search", "aria-label":"Clear search"});
+  searchClear.style.cssText = "position:absolute;right:26px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:none;font-size:0.82rem;line-height:1;";
+  searchClear.innerHTML = "&#x2715;";
+  searchWrap.appendChild(searchInput);
+  searchWrap.appendChild(searchClear);
+  sitePanel.appendChild(searchWrap);
+
+  var noMatch = hint("No matching projects found.");
+  noMatch.style.display = "none";
+
   if(reg && reg.groups){
     var sl = el("ul", {class:"sitemap"});
+    var groupRecords = [];
     reg.groups.forEach(function(g){
-      var gl = el("li"); var gh = el("div",{class:"group"}); gh.textContent = g.name;
+      var items = g.items.filter(inScope);
+      if(!items.length) return;
+      var gl = el("li"); var gh = el("div",{class:"cose-group"}); gh.textContent = g.name;
       gl.appendChild(gh); sl.appendChild(gl);
-      g.items.forEach(function(it){
+      var gRecord = { groupEl: gl, items: [] };
+      items.forEach(function(it){
         var li = el("li"), node;
         if(it.live === false || !it.url){
           // not published yet — render as plain text, not a dead link (no 404)
           node = el("span", {class:"pending"});
           node.style.cssText = "display:block;padding:9px 20px;font-size:.9rem;line-height:1.25;color:var(--muted);cursor:default";
-          node.innerHTML = esc(it.title) + (it.desc? "<small>"+esc(it.desc)+"</small>":"")
+          node.innerHTML = (it.emoji ? it.emoji + " " : "") + esc(it.title) + (it.desc? "<small>"+esc(it.desc)+"</small>":"")
             + '<small style="color:var(--muted)">· page pending</small>';
         } else {
-          node = el("a", {href:it.url});
-          if(it.id === slug){ node.className = "current"; }
-          node.innerHTML = esc(it.title) + (it.desc? "<small>"+esc(it.desc)+"</small>":"");
+          node = el("a", {href: withScope(it.url)});
+          if(it.id === slug){ node.className = "cose-current"; }
+          node.innerHTML = (it.emoji ? it.emoji + " " : "") + esc(it.title) + (it.desc? "<small>"+esc(it.desc)+"</small>":"");
         }
         li.appendChild(node); sl.appendChild(li);
+        var searchable = ((it.title || "") + " " + (it.desc || "") + " " + (it.id || "")).toLowerCase();
+        gRecord.items.push({ li: li, text: searchable });
       });
+      groupRecords.push(gRecord);
     });
     sitePanel.appendChild(sl);
+    sitePanel.appendChild(noMatch);
+
+    function doFilter(){
+      var q = searchInput.value.trim().toLowerCase();
+      searchClear.style.display = q ? "block" : "none";
+      var totalMatch = 0;
+      groupRecords.forEach(function(gr){
+        var gMatches = 0;
+        gr.items.forEach(function(item){
+          var isMatch = !q || item.text.indexOf(q) >= 0;
+          item.li.style.display = isMatch ? "" : "none";
+          if(isMatch) gMatches++;
+        });
+        gr.groupEl.style.display = gMatches > 0 ? "" : "none";
+        totalMatch += gMatches;
+      });
+      noMatch.style.display = (totalMatch === 0) ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", doFilter);
+    searchClear.addEventListener("click", function(){
+      searchInput.value = "";
+      doFilter();
+      searchInput.focus();
+    });
+    searchInput.addEventListener("keydown", function(e){
+      if(e.key === "Escape"){
+        searchInput.value = "";
+        doFilter();
+      }
+    });
   } else {
     sitePanel.appendChild(hint("Site registry not loaded."));
   }
@@ -192,13 +285,33 @@
   if(savedTheme){ applyTheme(savedTheme); }
   else { themeBtn.innerHTML = effectiveTheme() === "dark" ? SUN : MOON; }
 
+  /* ---------- resize the rail width (drag the right edge) ---------- */
+  var LS_RAIL = "barker.rail", RAIL_MIN = 220, RAIL_MAX = 460;
+  try{ var savedRail = localStorage.getItem(LS_RAIL);
+    if(savedRail){ document.documentElement.style.setProperty("--rail", savedRail + "px"); } }catch(e){}
+  var dragging = false;
+  function railFrom(x){ return Math.max(RAIL_MIN, Math.min(RAIL_MAX, Math.round(x))); }
+  function onMove(x){ if(dragging){ document.documentElement.style.setProperty("--rail", railFrom(x) + "px"); } }
+  function endDrag(){ if(!dragging) return; dragging = false; document.body.style.userSelect = "";
+    var w = parseInt(getComputedStyle(document.documentElement).getPropertyValue("--rail"), 10);
+    try{ localStorage.setItem(LS_RAIL, w); }catch(e){} }
+  resizeH.addEventListener("mousedown", function(e){ dragging = true; document.body.style.userSelect = "none"; e.preventDefault(); });
+  document.addEventListener("mousemove", function(e){ onMove(e.clientX); });
+  document.addEventListener("mouseup", endDrag);
+  resizeH.addEventListener("touchstart", function(e){ dragging = true; }, {passive:true});
+  document.addEventListener("touchmove", function(e){ if(dragging && e.touches[0]) onMove(e.touches[0].clientX); }, {passive:true});
+  document.addEventListener("touchend", endDrag);
+  // double-click resets to the default width
+  resizeH.addEventListener("dblclick", function(){ document.documentElement.style.setProperty("--rail","288px");
+    try{ localStorage.removeItem(LS_RAIL); }catch(e){} });
+
   /* ---------- scroll-spy ---------- */
   var spy = null;
   if("IntersectionObserver" in window && links.length){
     spy = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
         if(en.isIntersecting){
-          links.forEach(function(l){ l.a.classList.toggle("active", l.sec===en.target); });
+          links.forEach(function(l){ l.a.classList.toggle("cose-active", l.sec===en.target); });
         }
       });
     }, {rootMargin:"-45% 0px -50% 0px", threshold:0});
