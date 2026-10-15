@@ -6,7 +6,7 @@ authors:
   - family-names: Barker
     given-names: Richard
     email: admin@cosecloud.com
-    affiliation: "TODO"
+    affiliation: "Collaborative Science Environment Inc."
     orcid: "https://orcid.org/0000-0001-5681-9857"
 keywords:
   - spaceflight
@@ -34,6 +34,7 @@ preferred-citation:
     - family-names: Barker
       given-names: Richard
       email: admin@cosecloud.com
+      affiliation: "Collaborative Science Environment Inc."
       orcid: "https://orcid.org/0000-0001-5681-9857"
   year: 2026
   url: "https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing"
