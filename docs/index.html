@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Astronaut Health Search · Spaceflight Oncogenic Biomarkers & Flavonoid Reversal</title>
-  <meta name="description" content="Spaceflight oncogenic biomarkers and their transcriptomic reversal by food-derived flavonoids — an opposite-forcing R pipeline over NASA OSDR, LINCS L1000, PrimeKG, and Open Targets.">
+  <title>Astronaut Health Search · JAXA Astronaut Cell-Free RNA</title>
+  <meta name="description" content="JAXA astronaut plasma cell-free RNA data (OSD-530) and iDEP figures. The opposite-forcing flavonoid analysis formerly on this site was withdrawn on 18 October 2026.">
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="https://dr-richard-barker.github.io/Plant_response_to_radiation/cose/cose-theme.css">
 </head>
@@ -14,433 +14,57 @@
   <nav>
     <span class="brand">🧬 Astronaut Health Search</span>
     <a href="#overview">Overview</a>
-    <a href="#downloads">Manuscript</a>
-    <a href="#meta-analysis">Meta-Analysis</a>
-    <a href="#validation">Validation</a>
-    <a href="#drug-screen">Drug Screen</a>
-    <a href="#flavonoids">Flavonoid Reversal</a>
-    <a href="#disease-enrichment">Diseases</a>
-    <a href="#jaxa6">JAXA Data</a>
-    <a href="#data">Data & Code</a>
+    <a href="#withdrawn">Withdrawn Analysis</a>
+    <a href="#jaxa">JAXA Data</a>
     <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers" target="_blank" rel="noopener">GitHub ↗</a>
   </nav>
 </header>
 
 <main>
 
-  <!-- HERO SECTION -->
   <section class="hero" id="overview">
     <div class="badges">
       <span class="badge highlight">MIT License</span>
-      <span class="badge green">FAIR Data & Code</span>
       <span class="badge">NASA OSDR</span>
-      <span class="badge">LINCS L1000</span>
-      <span class="badge">Broad Drug Hub</span>
-      <span class="badge">PrimeKG</span>
-      <span class="badge">Open Targets</span>
-      <span class="badge">R 4.4.3 / metafor</span>
+      <span class="badge">OSD-530</span>
+      <span class="badge">iDEP</span>
     </div>
 
-    <h1>Spaceflight Oncogenic Biomarkers &amp; Their Transcriptomic Reversal by Food-Derived Flavonoids</h1>
+    <h1>JAXA Astronaut Cell-Free RNA Data</h1>
     <p class="lede">
-      An end-to-end "opposite-forcing" computational pharmacology pipeline: re-deriving a reproducible cross-species oncogenic biomarker signature across <b>23 spaceflight RNA-seq studies</b>, screening <b>420 LINCS L1000 perturbation profiles</b> for transcriptomic reversal, and identifying dietary flavonoids as potent nutritional countermeasures against spaceflight-induced inflammatory and SASP remodelling.
+      This repository holds plasma cell-free RNA data from the JAXA Cell-Free Epigenome study and figures from separate iDEP analyses of it.
     </p>
 
-    <div class="hero-img-box">
-      <img src="assets/Reversing_Spaceflight_Genetic_Risk_Research.png" alt="Reversing Spaceflight Genetic Risk Research Infographic" onclick="openModal(this.src, 'Reversing Spaceflight Genetic Risk Research: Comprehensive opposite-forcing pipeline overview.')">
-    </div>
-
-    <!-- DOWNLOAD BANNER -->
-    <div class="download-banner" id="downloads">
-      <div>
-        <h3>📄 Read &amp; Download the Complete Manuscript</h3>
-        <p>Targeted for <i>npj Microgravity</i> · Full text, high-res figures, and supplementary tables (T3–T13c).</p>
-      </div>
-      <div class="btnrow">
-        <a class="btn primary" href="Astronaut_flavenoids_and_biomarkers_manuscript.pdf" download="Astronaut_flavenoids_and_biomarkers_manuscript.pdf">
-          📥 Download PDF (1.5 MB)
-        </a>
-        <a class="btn secondary" href="Astronaut_flavenoids_and_biomarkers_manuscript.docx" download="Astronaut_flavenoids_and_biomarkers_manuscript.docx">
-          📄 Download Word (.docx)
-        </a>
-        <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/blob/main/astronaut-opposite-forcing/manuscript/manuscript.md" target="_blank" rel="noopener">
-          Markdown Source ↗
-        </a>
-        <a class="btn" href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/astronaut-opposite-forcing/manuscript/latex" target="_blank" rel="noopener">
-          LaTeX Source ↗
-        </a>
-      </div>
-    </div>
-
-    <!-- HIGHLIGHT CARDS -->
-    <div class="cards">
-      <div class="card">
-        <h3>1,610 Biomarker Genes</h3>
-        <p>Cross-species signature from <span class="k">23 OSDR studies</span> (10 human, 13 rodent) intersecting an 11,241-gene oncogene union.</p>
-      </div>
-      <div class="card">
-        <h3>ρ = 0.60 Validation</h3>
-        <p>Strict concordance (<span class="k">76% sign agreement</span>) validated against an independent Python cross-study meta-signature (S2).</p>
-      </div>
-      <div class="card">
-        <h3>17 Signatures at τ = −100</h3>
-        <p>420 LINCS L1000 perturbation signatures screened; 17 reach the maximal reversal score (<span class="k">τ = −100</span>) and 21 score below −50.</p>
-      </div>
-      <div class="card">
-        <h3>242 Genes Reversed</h3>
-        <p><span class="k">17.3%</span> of assessable biomarker genes (242 of 1,396) counter-regulated by dietary flavonoids <b>apigenin, luteolin, &amp; licochalcone A</b>.</p>
-      </div>
-      <div class="card">
-        <h3>SASP &amp; Chemokines</h3>
-        <p>Strongest reversal hits restore spaceflight-suppressed chemokines (<span class="k">CXCL8, MMP3, CSF2, CSF3, CXCL3</span>).</p>
-      </div>
-      <div class="card">
-        <h3>Disease Linkage</h3>
-        <p>Hypergeometric enrichment maps signature to <span class="k">carcinomas, coronary artery disease,</span> and metabolic syndromes.</p>
-      </div>
+    <div class="note">
+      <b>Withdrawn analysis.</b> The "opposite-forcing" analysis that used to be on this site (spaceflight oncogenic biomarkers and their reversal by food-derived flavonoids) was withdrawn on 18 October 2026. Its results should not be cited or reused. <a href="#withdrawn">Why it was withdrawn</a>.
     </div>
   </section>
 
-  <!-- SECTION 1: DATASET PANEL & QC -->
-  <section class="content" id="meta-analysis">
+  <section class="content" id="withdrawn">
     <div class="section-header">
-      <h2>1. Cross-Species Spaceflight Dataset &amp; Quality Control</h2>
-      <p class="sub">Harmonising 24 spaceflight transcriptomic studies across human and rodent model systems.</p>
+      <h2>Withdrawn Analysis</h2>
+      <p class="sub">Why the opposite-forcing analysis was removed.</p>
     </div>
 
     <p>
-      We queried the NASA Open Science Data Repository (OSDR / GeneLab) programmatically and curated a panel of 24 RNA-seq studies (11 human, 13 rodent) spanning spaceflight, simulated microgravity, hindlimb suspension, and space radiation (human: iPSC-derived cardiomyocytes and cardiac spheres, endothelial cells, aortic smooth muscle cells, myoblasts, mesenchymal stem cells, cortical and colorectal-cancer organoids, dermal fibroblasts and astronaut whole blood; mouse: liver, spleen, thymus, skin, eye, heart, soleus, cortical bone, hippocampus and adrenal gland; tissue labels from the OSDR study records). Per-study differential expression (DESeq2; \(p_{\mathrm{adj}} < 0.05\), \(|\text{log2FC}| > 1\)) yielded 410,121 gene-level results across 23 studies with testable contrasts (10 human, 13 rodent; the astronaut whole-blood study OSD-903 produced no per-study result). Rodent gene identifiers were mapped to human orthologs via biomaRt.
+      Until 18 October 2026 this repository held an R pipeline that derived a spaceflight oncogenic biomarker signature from 23 NASA OSDR RNA-seq studies, screened LINCS L1000 perturbation signatures for ones that reverse it, and highlighted food-derived flavonoids. A manuscript describing it was in preparation.
     </p>
-
-    <div class="figure-grid-2">
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F1_dataset_panel_overview.png', 'Figure 1: Curated spaceflight RNA-seq panel across human and rodent studies, tissues, and spaceflight stressors.')">
-          <img src="assets/figures/F1_dataset_panel_overview.png" alt="F1: Dataset Panel Overview">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 1 · Dataset Panel Overview</h4>
-          <p>Distribution of curated NASA OSDR spaceflight RNA-seq studies across species (human, mouse, rat), tissue types, and environmental stressors.</p>
-          <div class="key-takeaway"><b>Key takeaway:</b> Broad tissue and species representation ensures that the derived meta-signature captures fundamental spaceflight biology rather than platform artifacts.</div>
-        </div>
-      </div>
-
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F2_qc_pca.png', 'Figure 2: Quality control PCA across all processed spaceflight transcriptomic studies.')">
-          <img src="assets/figures/F2_qc_pca.png" alt="F2: QC PCA">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 2 · Per-Study Quality Control (PCA)</h4>
-          <p>Principal-component analysis of variance-stabilised counts (DESeq2 VST) across studies demonstrating robust separation of flight/treated vs ground/sham control conditions.</p>
-          <div class="key-takeaway"><b>Key takeaway:</b> Stringent QC verifies clear biological separation and absence of catastrophic batch distortion across cohorts.</div>
-        </div>
-      </div>
-    </div>
+    <p>
+      The manuscript and this site described the cross-study meta-analysis as a random-effects model (<code>metafor</code>, REML). It was not one. 33,365 genes were measured in two or more studies. For every one of them, the published meta-signature matches the Stouffer combined-z fallback in the pipeline's error handler exactly, and none matches a REML fit. The REML call failed for every gene, and the error handler substituted Stouffer's method without logging it. Stouffer's method ignores the heterogeneity between studies, species and tissues that the random-effects model was chosen to handle.
+    </p>
+    <p>
+      Every later result depends on that signature: the biomarker genes, the LINCS reversal scores and the flavonoid findings. Re-running the pipeline properly would mean starting again from the source data, so the analysis was withdrawn rather than corrected. The last version is kept for the record in the <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/1f16c8f" target="_blank" rel="noopener">repository history (commit 1f16c8f)</a>.
+    </p>
   </section>
 
-  <!-- SECTION 2: META-ANALYSIS & ONCOGENIC INTERSECTION -->
-  <section class="content">
+  <section class="content" id="jaxa">
     <div class="section-header">
-      <h2>2. Spaceflight Oncogenic Biomarker Discovery</h2>
-      <p class="sub">Deriving the 1,610-gene cross-study spaceflight oncogenic biomarker signature.</p>
-    </div>
-
-    <p>
-      A random-effects meta-analysis (<code>metafor::rma</code> REML) scored 40,211 genes, identifying 3,668 genes significant at \(p_{\mathrm{adj}} < 0.05\). To isolate genes with direct oncogenic relevance, we intersected these meta-significant genes with an 11,241-gene oncogene union assembled from MSigDB C6 oncogenic signatures (10,927 genes), KEGG oncogenesis pathways (931 genes), and curated oncogene/tumour-suppressor/SASP lists (195 genes).
-    </p>
-
-    <div class="figure-block">
-      <div class="figure-img-wrap" onclick="openModal('assets/figures/F3_meta_signature_volcano.png', 'Figure 3: Random-effects meta-analysis volcano plot across 23 spaceflight studies (40,211 genes scored; 3,668 significant).')">
-        <img src="assets/figures/F3_meta_signature_volcano.png" alt="F3: Meta-signature Volcano">
-      </div>
-      <div class="figure-caption">
-        <h4>Figure 3 · Genome-Wide Random-Effects Meta-Analysis Volcano Plot</h4>
-        <p>Mean spaceflight log2 fold-change versus \(-\log_{10} p\)-value across 40,211 genes. 3,668 genes pass \(p_{\mathrm{adj}} < 0.05\), exhibiting strong directional heterogeneity driven by tissue-specific stress responses.</p>
-      </div>
-    </div>
-
-    <div class="figure-grid-2">
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F4_oncogene_intersection.png', 'Figure 4a: The 1,610 biomarker genes by oncogene-union source list (T4).')">
-          <img src="assets/figures/F4_oncogene_intersection.png" alt="F4: Oncogene Intersection">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 4a · Oncogene Union Intersection</h4>
-          <p>The <b>1,610 oncogenic biomarker genes</b> (the 3,668 meta-significant genes that fall in the 11,241-gene oncogene union) by source list: MSigDB C6 oncogenic signatures (1,552), curated oncogene/TSG/SASP list (45) and KEGG oncogenesis (13). Data: T4.</p>
-        </div>
-      </div>
-
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F4b_oncogene_by_class.png', 'Figure 4b: The 1,610 biomarker genes by gene class (T4).')">
-          <img src="assets/figures/F4b_oncogene_by_class.png" alt="F4b: Oncogene by Class">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 4b · Biomarker Composition by Class</h4>
-          <p>The 1,610 biomarker genes by gene class: MSigDB C6 oncogenic signatures (1,552), oncogenes (19), SASP factors (18), KEGG oncogenesis (13) and tumour suppressors (8). Data: T4.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 3: VALIDATION -->
-  <section class="content" id="validation">
-    <div class="section-header">
-      <h2>3. Independent Cross-Study Validation</h2>
-      <p class="sub">Benchmarking the R pipeline against an independent Python meta-signature (S2).</p>
-    </div>
-
-    <p>
-      To verify reproducibility, the derived R meta-signature was benchmarked against an independent Python cross-study meta-signature (S2) from the companion repository <a href="https://github.com/dr-richard-barker/astronaut-oncogene-biomarkers" target="_blank" rel="noopener"><code>astronaut-oncogene-biomarkers</code></a>. Across 19,484 overlapping genes, the two pipelines demonstrated exceptional concordance.
-    </p>
-
-    <div class="figure-block">
-      <div class="figure-img-wrap" onclick="openModal('assets/figures/F5_validation_concordance.png', 'Figure 5: Validation concordance between R meta-signature and independent Python S2 meta-signature (Spearman rho = 0.60, 76% sign agreement).')">
-        <img src="assets/figures/F5_validation_concordance.png" alt="F5: Validation Concordance">
-      </div>
-      <div class="figure-caption">
-        <h4>Figure 5 · Validation Concordance (R vs Python S2)</h4>
-        <p>Scatter plot and density contours showing strong correlation between R \(\text{log2FC}\) and Python S2 weights (Spearman \(\rho = 0.603\), sign agreement \(75.8\%\), Jaccard top-100 \(= 0.19\), Jaccard top-500 \(= 0.28\)).</p>
-        <div class="key-takeaway"><b>Key takeaway:</b> The spaceflight oncogenic signal is robust to differing normalization algorithms, ortholog mappings, and statistical implementations.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4: OPPOSITE FORCING DRUG SCREEN -->
-  <section class="content" id="drug-screen">
-    <div class="section-header">
-      <h2>4. LINCS L1000 Opposite-Forcing Drug Screening</h2>
-      <p class="sub">Screening 420 drug perturbation signatures to identify compounds that counter-regulate spaceflight biomarkers.</p>
-    </div>
-
-    <p>
-      Using a weighted Kolmogorov-Smirnov connectivity score (\(\tau\)-analog normalised against the LINCS L1000 background), we screened 420 drug perturbation signatures for opposite-forcing reversal of the 1,610 oncogenic biomarkers. Seventeen signatures reached the maximal reversal score (\(\tau = -100\)) and four more scored below −50; they include food-derived flavonoids, the MDM2 inhibitor Nutlin-3, the topoisomerase inhibitor doxorubicin, and PI3K-mTOR inhibitors. One is an siRNA knockdown rather than a drug.
-    </p>
-
-    <div class="figure-block">
-      <div class="figure-img-wrap" onclick="openModal('assets/figures/F6_lincs_reversal_ranking.png', 'Figure 6: LINCS L1000 tau-analog reversal score ranking across 420 drug perturbation signatures.')">
-        <img src="assets/figures/F6_lincs_reversal_ranking.png" alt="F6: LINCS Reversal Ranking">
-      </div>
-      <div class="figure-caption">
-        <h4>Figure 6 · LINCS L1000 Reversal Score Ranking</h4>
-        <p>The 30 most negative of the 420 perturbation signatures by \(\tau\)-analog connectivity score. 17 reach the maximal reversal score (\(\tau = -100\)), including the dietary flavonoids <i>apigenin, luteolin,</i> and <i>licochalcone A</i>. Data: T6.</p>
-      </div>
-    </div>
-
-    <div class="figure-grid-2">
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F7_tissue_stratified_reversal.png', 'Figure 7: Tau of the 20 most negative signatures in each of the 11 studies with per-study scores.')">
-          <img src="assets/figures/F7_tissue_stratified_reversal.png" alt="F7: Tissue-stratified Reversal">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 7 · Tissue-Stratified Reversal Heatmap</h4>
-          <p>Tau of the 20 most negative signatures (rows) in each of the 11 studies with per-study scores (columns, labelled with the OSDR tissue). Reversal varies by study: licochalcone A scores \(\tau = -100\) in cardiac spheres (OSD-811) but +74 to +100 in aortic smooth muscle cells, dermal fibroblasts and two myoblast studies, and apigenin + luteolin stays between −15 and +15 in every study. Data: T6, T8.</p>
-        </div>
-      </div>
-
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F9_drug_context.png', 'Figure 9: Clinical phase, mechanism of action, and target annotations from Broad Drug Repurposing Hub and PrimeKG.')">
-          <img src="assets/figures/F9_drug_context.png" alt="F9: Drug Context">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 9 · Drug Context &amp; Clinical Annotations</h4>
-          <p>Integration of Broad Drug Repurposing Hub and PrimeKG annotations mapping clinical development phases, mechanisms of action, and known molecular targets for top reversal hits.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 5: GENE-LEVEL FLAVONOID REVERSAL -->
-  <section class="content" id="flavonoids">
-    <div class="section-header">
-      <h2>5. Gene-Level Reversal by Food-Derived Flavonoids</h2>
-      <p class="sub">Direct counter-regulation of 242 spaceflight biomarker genes, focusing on SASP and inflammatory chemokines.</p>
-    </div>
-
-    <p>
-      Because apigenin, luteolin, and licochalcone A were among the strongest reversal candidates and are dietary compounds directly relevant to space crew nutritional planning, we dissected their gene-level effects across the 1,396 assessable biomarker genes (non-zero LINCS z-score in at least one signature). A gene was defined as <i>directly reversed</i> when its spaceflight \(\text{log2FC}\) was opposite to its compound \(z\)-score at \(|z| \ge 1.5\).
-    </p>
-    <p>
-      <b>242 unique oncogenic biomarker genes (17.3% of 1,396)</b> were directly reversed by at least one flavonoid signature, with 20 genes reversed across all three signatures. Strikingly, the top reversed genes are critical inflammatory chemokines and senescence-associated secretory phenotype (SASP) factors down-regulated by spaceflight and restored/up-regulated by flavonoids: <b>CXCL8 (IL-8), MMP3, CSF2 (GM-CSF), CSF3 (G-CSF), CXCL3, AREG,</b> and <b>HAS1</b>.
-    </p>
-
-    <div class="figure-block">
-      <div class="figure-img-wrap" onclick="openModal('assets/figures/F11_gene_level_reversal.png', 'Figure 11: Gene-level reversal of oncogenic biomarkers across 3 flavonoid signatures at multiple z-score thresholds.')">
-        <img src="assets/figures/F11_gene_level_reversal.png" alt="F11: Gene-level Reversal">
-      </div>
-      <div class="figure-caption">
-        <h4>Figure 11 · Gene-Level Flavonoid Reversal Overview</h4>
-        <p><b>(Panel A)</b> Number of reversed vs concordant genes across three effect thresholds (\(|z| \ge 1.5\), \(|z| \ge 2\), \(|z| \ge 3\)) for <code>apigenin+luteolin_1</code> (134 reversed), <code>apigenin+luteolin_2</code> (136 reversed), and <code>licochalcone_A</code> (99 reversed). <b>(Panel B)</b> Scatter plot of spaceflight mean \(\text{log2FC}\) vs compound \(z\)-score highlighting genes falling into the opposite-forcing quadrants.</p>
-      </div>
-    </div>
-
-    <div class="figure-block">
-      <div class="figure-img-wrap" onclick="openModal('assets/figures/F12_reversed_genes_heatmap.png', 'Figure 12: Heatmap of top reversed oncogenic biomarker genes comparing spaceflight log2FC with flavonoid compound z-scores.')">
-        <img src="assets/figures/F12_reversed_genes_heatmap.png" alt="F12: Reversed Genes Heatmap">
-      </div>
-      <div class="figure-caption">
-        <h4>Figure 12 · Top Reversed Biomarker Genes Heatmap</h4>
-        <p>Direct comparison of spaceflight meta-log2FC against compound z-scores across the three flavonoid perturbation signatures, highlighting inflammatory restoration of CXCL8, MMP3, CSF2, CSF3, CXCL3, AREG, and downregulation of spaceflight-induced DMRT1 and REN.</p>
-        <div class="key-takeaway"><b>Key takeaway:</b> Dietary flavonoids directly counter spaceflight-induced immune suppression and senescence secretory disruption at the individual transcript level.</div>
-      </div>
-    </div>
-
-    <!-- TABLE: TOP REVERSED GENES -->
-    <div class="data-table-wrap">
-      <div class="table-header">
-        <h4>Table: Top Reversed Oncogenic Biomarker Genes by Dietary Flavonoids</h4>
-        <span class="badge green">242 Total Reversed Genes</span>
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Gene Symbol</th>
-            <th>Spaceflight Dir</th>
-            <th>SF Mean log2FC</th>
-            <th>Max Compound |z|</th>
-            <th>Signatures Reversed</th>
-            <th>Class</th>
-            <th>Biological Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>CXCL8</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.40</td>
-            <td>8.49</td>
-            <td>2 / 3</td>
-            <td>SASP</td>
-            <td>Interleukin-8; neutrophil recruitment &amp; immune activation</td>
-          </tr>
-          <tr>
-            <td><b>DMRT1</b></td>
-            <td><span style="color:#d55e00">Up (SF)</span></td>
-            <td>+2.83</td>
-            <td>4.03</td>
-            <td>2 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Transcription factor involved in cellular transformation</td>
-          </tr>
-          <tr>
-            <td><b>PI3</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.59</td>
-            <td>6.37</td>
-            <td>3 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Peptidase inhibitor 3 / Elafin; mucosal immunity &amp; barrier defence</td>
-          </tr>
-          <tr>
-            <td><b>MMP3</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.84</td>
-            <td>4.92</td>
-            <td>3 / 3</td>
-            <td>SASP</td>
-            <td>Matrix metalloproteinase-3; ECM remodelling &amp; wound healing</td>
-          </tr>
-          <tr>
-            <td><b>CSF3</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−2.28</td>
-            <td>3.82</td>
-            <td>1 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Granulocyte colony-stimulating factor (G-CSF)</td>
-          </tr>
-          <tr>
-            <td><b>CSF2</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.26</td>
-            <td>6.13</td>
-            <td>3 / 3</td>
-            <td>SASP</td>
-            <td>Granulocyte-macrophage CSF (GM-CSF); myeloid differentiation</td>
-          </tr>
-          <tr>
-            <td><b>CXCL3</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.52</td>
-            <td>4.88</td>
-            <td>3 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Chemokine ligand 3; monocyte/macrophage migration</td>
-          </tr>
-          <tr>
-            <td><b>REN</b></td>
-            <td><span style="color:#d55e00">Up (SF)</span></td>
-            <td>+1.12</td>
-            <td>6.42</td>
-            <td>1 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Renin; blood pressure regulation &amp; fluid balance</td>
-          </tr>
-          <tr>
-            <td><b>AREG</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−0.95</td>
-            <td>6.80</td>
-            <td>3 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Amphiregulin; EGFR ligand promoting tissue repair</td>
-          </tr>
-          <tr>
-            <td><b>HAS1</b></td>
-            <td><span style="color:#0072b2">Down (SF)</span></td>
-            <td>−1.51</td>
-            <td>3.98</td>
-            <td>2 / 3</td>
-            <td>C6 Oncogenic</td>
-            <td>Hyaluronan synthase-1; extracellular matrix synthesis</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- SECTION 6: DISEASE ENRICHMENT & NUTRACEUTICALS -->
-  <section class="content" id="disease-enrichment">
-    <div class="section-header">
-      <h2>6. Disease Phenotype Mapping &amp; Nutraceutical Candidates</h2>
-      <p class="sub">Validating biological relevance via PrimeKG and Open Targets knowledge graphs.</p>
-    </div>
-
-    <p>
-      Hypergeometric enrichment against PrimeKG (160,822 disease-gene edges) identified 389 significant disease associations (\(p_{\mathrm{adj}} < 0.05\)), led by sarcomatoid carcinoma (\(p_{\mathrm{adj}} = 3.3 \times 10^{-12}\)), undifferentiated carcinoma, coronary artery disease (\(p_{\mathrm{adj}} = 3.4 \times 10^{-11}\)), and prostate cancer. Open Targets GraphQL API returned 4,891 associations across 1,689 diseases.
-    </p>
-
-    <div class="figure-grid-2">
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F8_disease_enrichment.png', 'Figure 8: Disease phenotype enrichment linking the 1,610 spaceflight biomarker genes to human disease ontologies.')">
-          <img src="assets/figures/F8_disease_enrichment.png" alt="F8: Disease Enrichment">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 8 · Disease Phenotype Enrichment</h4>
-          <p>Cross-ranked disease associations integrating PrimeKG hypergeometric \(p\)-values and Open Targets association scores, showing top enrichment for carcinomas, vascular disorders, and metabolic diseases.</p>
-        </div>
-      </div>
-
-      <div class="figure-block">
-        <div class="figure-img-wrap" onclick="openModal('assets/figures/F10_nutraceutical_flags.png', 'Figure 10: Multi-stream evidence flagging nutraceutical candidates among top reversal hits.')">
-          <img src="assets/figures/F10_nutraceutical_flags.png" alt="F10: Nutraceutical Flags">
-        </div>
-        <div class="figure-caption">
-          <h4>Figure 10 · Nutraceutical Prioritisation</h4>
-          <p>Cross-matching of top reversal hits against a 176-compound nutraceutical lexicon with supporting evidence from LINCS GMT drug names and the Broad Drug Repurposing Hub.</p>
-          <div class="key-takeaway"><b>Lead Candidates:</b> <i>Luteolin</i> (3 evidence streams), <i>Apigenin</i> (2 streams), and <i>Licochalcone A</i> (2 streams).</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 7: SUPPORTING JAXA DATA (OSD-530) -->
-  <section class="content" id="jaxa6">
-    <div class="section-header">
-      <h2>7. Supporting JAXA Data (not part of the pipeline)</h2>
+      <h2>JAXA Data</h2>
       <p class="sub">Astronaut plasma cell-free RNA from the JAXA Cell-Free Epigenome study (OSD-530).</p>
     </div>
 
     <p>
-      This repository also holds plasma cell-free RNA collected from six astronauts before, during and after ISS flight in the JAXA Cell-Free Epigenome study (<a href="https://osdr.nasa.gov/bio/repo/data/studies/OSD-530" target="_blank" rel="noopener">OSD-530</a>; 64 samples). The figures below come from separate iDEP analyses. They are not inputs to the opposite-forcing pipeline above, and no result above depends on them.
+      The data are plasma cell-free RNA collected from six astronauts before, during and after ISS flight in the JAXA Cell-Free Epigenome study (<a href="https://osdr.nasa.gov/bio/repo/data/studies/OSD-530" target="_blank" rel="noopener">OSD-530</a>; 64 samples). The figures below come from separate iDEP analyses. The files are in the repository's <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers/tree/main/data" target="_blank" rel="noopener"><code>data/</code></a> folder.
     </p>
 
     <div class="figure-grid-2">
@@ -466,143 +90,6 @@
     </div>
   </section>
 
-  <!-- SECTION 8: DATA AND CODE AVAILABILITY -->
-  <section class="content" id="data">
-    <div class="section-header">
-      <h2>8. Supplementary Tables, Data &amp; Reproducibility</h2>
-      <p class="sub">Complete FAIR data access and execution scripts.</p>
-    </div>
-
-    <div class="data-table-wrap">
-      <div class="table-header">
-        <h4>Supplementary Tables Index (T3–T13c)</h4>
-        <span class="badge highlight">FAIR Data</span>
-      </div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Table</th>
-            <th>File Name</th>
-            <th>Rows</th>
-            <th>Description</th>
-            <th>Format</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><b>T3</b></td>
-            <td><code>T3_meta_signature.tsv</code></td>
-            <td>40,211</td>
-            <td>Genome-wide random-effects meta-analysis results (mean log2FC, SE, z, padj)</td>
-            <td>TSV (4.5 MB)</td>
-          </tr>
-          <tr>
-            <td><b>T4</b></td>
-            <td><code>T4_oncogene_intersection.csv</code></td>
-            <td>1,610</td>
-            <td>The 1,610 spaceflight oncogenic biomarker genes (meta-significant ∩ oncogene union)</td>
-            <td>CSV (150 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T5</b></td>
-            <td><code>T5_validation_concordance.csv</code></td>
-            <td>5</td>
-            <td>Validation metrics vs independent Python meta-signature S2 (\(\rho = 0.603\))</td>
-            <td>CSV</td>
-          </tr>
-          <tr>
-            <td><b>T5b</b></td>
-            <td><code>T5b_R_vs_S2_joined.csv</code></td>
-            <td>19,484</td>
-            <td>Gene-by-gene comparison between R and Python S2 meta-signatures</td>
-            <td>CSV (2.3 MB)</td>
-          </tr>
-          <tr>
-            <td><b>T6</b></td>
-            <td><code>T6_lincs_reversal_scores.csv</code></td>
-            <td>420</td>
-            <td>LINCS L1000 tau-analog reversal connectivity scores across all drug signatures</td>
-            <td>CSV (60 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T7</b></td>
-            <td><code>T7_top_opposite_forcing.csv</code></td>
-            <td>50</td>
-            <td>Top 50 signatures by \(\tau\) (17 at \(\tau = -100\), 21 below −50)</td>
-            <td>CSV (20 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T8</b></td>
-            <td><code>T8_tissue_stratified_reversal.csv</code></td>
-            <td>4,620</td>
-            <td>Per-study reversal scores (11 studies × 420 signatures)</td>
-            <td>CSV (730 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T9</b></td>
-            <td><code>T9_drug_context.csv</code></td>
-            <td>50</td>
-            <td>Drug annotations (clinical phase, MoA, targets from Broad Repurposing Hub &amp; PrimeKG)</td>
-            <td>CSV (17 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T10b</b></td>
-            <td><code>T10b_disease_enrichment_combined.csv</code></td>
-            <td>2,898</td>
-            <td>Combined disease ranking integrating PrimeKG and Open Targets</td>
-            <td>CSV (330 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T11</b></td>
-            <td><code>T11_disease_enrichment_opentargets.csv</code></td>
-            <td>1,689</td>
-            <td>Open Targets gene-disease associations</td>
-            <td>CSV (180 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T12</b></td>
-            <td><code>T12_nutraceutical_flags.csv</code></td>
-            <td>11</td>
-            <td>Nutraceutical candidates flagged among top reversal hits</td>
-            <td>CSV (3 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T12c</b></td>
-            <td><code>T12c_nutraceutical_full_scan.csv</code></td>
-            <td>37</td>
-            <td>Full scan of all 420 signatures for nutraceutical compounds</td>
-            <td>CSV (7 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T13</b></td>
-            <td><code>T13_gene_level_reversal.csv</code></td>
-            <td>3,895</td>
-            <td>Gene \(\times\) signature reversal comparisons across 3 flavonoid signatures</td>
-            <td>CSV (1.1 MB)</td>
-          </tr>
-          <tr>
-            <td><b>T13b</b></td>
-            <td><code>T13b_gene_level_reversal_summary.csv</code></td>
-            <td>3</td>
-            <td>Summary counts and reversal ratios across effect thresholds</td>
-            <td>CSV (1 KB)</td>
-          </tr>
-          <tr>
-            <td><b>T13c</b></td>
-            <td><code>T13c_reversed_genes_union.csv</code></td>
-            <td>242</td>
-            <td>Union of 242 unique reversed biomarker genes at \(|z| \ge 1.5\) with per-sig \(z\)-scores</td>
-            <td>CSV (25 KB)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="note info">
-      <b>Reproducibility &amp; Pipeline Execution:</b> All analyses were performed in R 4.4.3 with dependencies managed via <code>renv.lock</code>. The full pipeline can be run using <code>Rscript run_all.R</code> or step-by-step using scripts <code>01_OSD_query.R</code> through <code>07_gene_level_reversal.R</code>.
-    </div>
-  </section>
-
 </main>
 
 <!-- LIGHTBOX MODAL -->
@@ -616,7 +103,7 @@
 
 <footer class="site">
   <div>
-    <b>Astronaut Health Search</b> — Spaceflight Oncogenic Biomarkers &amp; Opposite-Forcing Drug Discovery ·
+    <b>Astronaut Health Search</b> — JAXA astronaut cell-free RNA data ·
     <a href="https://github.com/dr-richard-barker/Astronaut_flavenoids_and_biomarkers" target="_blank" rel="noopener">GitHub Repository</a>
   </div>
   <div>
